@@ -1,0 +1,31 @@
+# Java / Maven
+backend/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+*.class
+*.log
+*.jar
+*.war
+hs_err_pid*
+
+# Node (frontend build tooling only)
+frontend/node_modules/
+frontend/dist/
+
+# Environment
+.env
+.env.local
+.env.production
+backend/.env
+frontend/.env
+frontend/.env.production
+application-local.properties
+
+# Local dumps may contain data; Neon dump is intentionally committed for deploy
+# Do not commit connection strings or secrets.
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
