@@ -42,13 +42,23 @@ public class GameController {
     }
 
     @GetMapping("/games/{id}")
-    public GameDetailDto detail(@PathVariable Long id) {
-        return gameService.getById(id);
+    public GameDetailDto detail(@PathVariable Long id, HttpServletResponse response) {
+        long started = System.nanoTime();
+        GameDetailDto body = gameService.getById(id);
+        long appMs = (System.nanoTime() - started) / 1_000_000L;
+        response.setHeader("Server-Timing", "app;desc=\"/api/games/{id}\";dur=" + appMs);
+        response.setHeader("Access-Control-Expose-Headers", "Server-Timing");
+        return body;
     }
 
     @GetMapping("/filters")
-    public FilterCatalogDto filters() {
-        return gameService.filters();
+    public FilterCatalogDto filters(HttpServletResponse response) {
+        long started = System.nanoTime();
+        FilterCatalogDto body = gameService.filters();
+        long appMs = (System.nanoTime() - started) / 1_000_000L;
+        response.setHeader("Server-Timing", "app;desc=\"/api/filters\";dur=" + appMs);
+        response.setHeader("Access-Control-Expose-Headers", "Server-Timing");
+        return body;
     }
 
     @GetMapping("/health")

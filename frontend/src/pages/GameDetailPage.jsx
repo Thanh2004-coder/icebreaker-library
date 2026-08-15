@@ -3,30 +3,99 @@ import { Link, useParams } from "react-router-dom";
 import Header from "../components/Header.jsx";
 import ReviewForm from "../components/ReviewForm.jsx";
 import StarRating from "../components/StarRating.jsx";
-import { fetchGame, fetchReviews, formatDuration, formatPlayers, formatRating } from "../api.js";
+import {
+  getCachedDetail,
+  getCachedReviews,
+  getCachedSummary,
+  loadGameDetail,
+  loadGameReviews,
+  refreshAfterReview,
+} from "../cache/gameStore.js";
+import { formatDuration, formatPlayers, formatRating } from "../api.js";
+
+function hasFullDetail(game) {
+  return Boolean(game && game.howToPlay != null && game.rules != null);
+}
 
 export default function GameDetailPage() {
   const { id } = useParams();
-  const [game, setGame] = useState(null);
-  const [reviews, setReviews] = useState([]);
+  const cachedSummary = getCachedSummary(id);
+  const cachedDetail = getCachedDetail(id);
+  const cachedReviews = getCachedReviews(id);
+
+  const [game, setGame] = useState(cachedDetail || cachedSummary);
+  const [reviews, setReviews] = useState(cachedReviews || []);
+  const [detailLoading, setDetailLoading] = useState(!hasFullDetail(cachedDetail));
+  const [reviewsLoading, setReviewsLoading] = useState(cachedReviews == null);
   const [error, setError] = useState("");
 
-  const load = () => {
+  useEffect(() => {
+    let cancelled = false;
+    const summary = getCachedSummary(id);
+    const detail = getCachedDetail(id);
+    const existingReviews = getCachedReviews(id);
+
     setError("");
-    Promise.all([fetchGame(id), fetchReviews(id)])
-      .then(([gameData, reviewData]) => {
-        setGame(gameData);
-        setReviews(reviewData);
+    setGame(detail || summary || null);
+    setReviews(existingReviews || []);
+    setDetailLoading(!hasFullDetail(detail));
+    setReviewsLoading(existingReviews == null);
+
+    const tasks = [];
+
+    if (!hasFullDetail(detail)) {
+      tasks.push(
+        loadGameDetail(id)
+          .then((data) => {
+            if (!cancelled) {
+              setGame(data);
+              setDetailLoading(false);
+            }
+          })
+          .catch((err) => {
+            if (!cancelled) {
+              setError(err.message);
+              setDetailLoading(false);
+            }
+          })
+      );
+    }
+
+    if (existingReviews == null) {
+      tasks.push(
+        loadGameReviews(id)
+          .then((data) => {
+            if (!cancelled) {
+              setReviews(data);
+              setReviewsLoading(false);
+            }
+          })
+          .catch((err) => {
+            if (!cancelled) {
+              if (!getCachedSummary(id) && !getCachedDetail(id)) {
+                setError(err.message);
+              }
+              setReviewsLoading(false);
+            }
+          })
+      );
+    }
+
+    return () => {
+      cancelled = true;
+    };
+  }, [id]);
+
+  const onReviewCreated = () => {
+    refreshAfterReview(id)
+      .then(({ reviews: nextReviews, detail }) => {
+        setReviews(nextReviews);
+        setGame(detail);
       })
       .catch((err) => setError(err.message));
   };
 
-  useEffect(() => {
-    setGame(null);
-    setReviews([]);
-    load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  const showShell = Boolean(game);
 
   return (
     <div className="page">
@@ -37,9 +106,9 @@ export default function GameDetailPage() {
         </Link>
 
         {error ? <p className="error">{error}</p> : null}
-        {!error && !game ? <p>Đang tải chi tiết trò chơi…</p> : null}
+        {!error && !showShell ? <p>Đang tải chi tiết trò chơi…</p> : null}
 
-        {game ? (
+        {showShell ? (
           <article className="detail">
             <header>
               <p className="eyebrow">Chi tiết trò chơi</p>
@@ -55,7 +124,8 @@ export default function GameDetailPage() {
                 <strong>Thời gian:</strong> {formatDuration(game.durationMin, game.durationMax)}
               </li>
               <li>
-                <strong>Chuẩn bị:</strong> {game.preparationTime ? `${game.preparationTime} phút` : "Không cần"}
+                <strong>Chuẩn bị:</strong>{" "}
+                {game.preparationTime ? `${game.preparationTime} phút` : "Không cần"}
               </li>
             </ul>
 
@@ -81,17 +151,36 @@ export default function GameDetailPage() {
 
             <section>
               <h2>Cách chơi</h2>
-              <div className="prose">{game.howToPlay}</div>
+              {detailLoading && game.howToPlay == null ? (
+                <div className="skeleton-block" aria-hidden="true">
+                  <div className="skeleton-line" />
+                  <div className="skeleton-line" />
+                  <div className="skeleton-line skeleton-short" />
+                </div>
+              ) : (
+                <div className="prose">{game.howToPlay}</div>
+              )}
             </section>
 
             <section>
               <h2>Chuẩn bị</h2>
-              <p>{game.preparation}</p>
+              {detailLoading && game.preparation == null ? (
+                <div className="skeleton-line skeleton-short" aria-hidden="true" />
+              ) : (
+                <p>{game.preparation}</p>
+              )}
             </section>
 
             <section>
               <h2>Quy định</h2>
-              <div className="prose">{game.rules}</div>
+              {detailLoading && game.rules == null ? (
+                <div className="skeleton-block" aria-hidden="true">
+                  <div className="skeleton-line" />
+                  <div className="skeleton-line skeleton-short" />
+                </div>
+              ) : (
+                <div className="prose">{game.rules}</div>
+              )}
             </section>
 
             <section>
@@ -107,7 +196,15 @@ export default function GameDetailPage() {
 
             <section>
               <h2>Các review</h2>
-              {reviews.length === 0 ? <p className="empty">Chưa có review. Hãy là người đầu tiên.</p> : null}
+              {reviewsLoading ? (
+                <div className="skeleton-block" aria-hidden="true">
+                  <div className="skeleton-line" />
+                  <div className="skeleton-line skeleton-short" />
+                </div>
+              ) : null}
+              {!reviewsLoading && reviews.length === 0 ? (
+                <p className="empty">Chưa có review. Hãy là người đầu tiên.</p>
+              ) : null}
               <ul className="review-list">
                 {reviews.map((item) => (
                   <li key={item.id} className="review-item">
@@ -122,7 +219,7 @@ export default function GameDetailPage() {
               </ul>
             </section>
 
-            <ReviewForm gameId={id} onCreated={load} />
+            <ReviewForm gameId={id} onCreated={onReviewCreated} />
           </article>
         ) : null}
       </main>

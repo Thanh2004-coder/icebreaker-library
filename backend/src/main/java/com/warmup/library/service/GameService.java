@@ -1,20 +1,16 @@
 package com.warmup.library.service;
 
-import com.warmup.library.domain.Game;
 import com.warmup.library.dto.FilterCatalogDto;
 import com.warmup.library.dto.FilterOptionDto;
 import com.warmup.library.dto.GameDetailDto;
-import com.warmup.library.dto.GameMapper;
 import com.warmup.library.dto.GameSummaryDto;
 import com.warmup.library.dto.PageResponse;
 import com.warmup.library.repository.ContextTagRepository;
-import com.warmup.library.repository.GameRepository;
+import com.warmup.library.repository.GameDetailQuery;
 import com.warmup.library.repository.GameSummaryQuery;
 import com.warmup.library.repository.PurposeTagRepository;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -55,24 +51,23 @@ public class GameService {
             Map.entry("nhom-nho", "small-group")
     );
 
-    private final GameRepository gameRepository;
     private final GameSummaryQuery gameSummaryQuery;
+    private final GameDetailQuery gameDetailQuery;
     private final ContextTagRepository contextTagRepository;
     private final PurposeTagRepository purposeTagRepository;
-    private final ReviewService reviewService;
+
+    private volatile FilterCatalogDto filterCatalogCache;
 
     public GameService(
-            GameRepository gameRepository,
             GameSummaryQuery gameSummaryQuery,
+            GameDetailQuery gameDetailQuery,
             ContextTagRepository contextTagRepository,
-            PurposeTagRepository purposeTagRepository,
-            ReviewService reviewService
+            PurposeTagRepository purposeTagRepository
     ) {
-        this.gameRepository = gameRepository;
         this.gameSummaryQuery = gameSummaryQuery;
+        this.gameDetailQuery = gameDetailQuery;
         this.contextTagRepository = contextTagRepository;
         this.purposeTagRepository = purposeTagRepository;
-        this.reviewService = reviewService;
     }
 
     @Transactional(readOnly = true)
@@ -101,39 +96,47 @@ public class GameService {
 
     @Transactional(readOnly = true)
     public GameDetailDto getById(Long id) {
-        Game game = gameRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Khong tim thay tro choi"));
-        return GameMapper.toDetail(game, reviewService.statsForOne(id));
+        return gameDetailQuery.findById(id);
     }
 
     @Transactional(readOnly = true)
     public FilterCatalogDto filters() {
-        List<FilterOptionDto> contexts = contextTagRepository.findAll().stream()
-                .filter(item -> ALLOWED_CONTEXT_SLUGS.contains(item.getSlug()))
-                .map(item -> new FilterOptionDto(item.getSlug(), item.getName()))
-                .toList();
-        List<FilterOptionDto> purposes = purposeTagRepository.findAll().stream()
-                .map(item -> new FilterOptionDto(item.getSlug(), item.getName()))
-                .toList();
+        FilterCatalogDto cached = filterCatalogCache;
+        if (cached != null) {
+            return cached;
+        }
+        synchronized (this) {
+            if (filterCatalogCache != null) {
+                return filterCatalogCache;
+            }
+            List<FilterOptionDto> contexts = contextTagRepository.findAll().stream()
+                    .filter(item -> ALLOWED_CONTEXT_SLUGS.contains(item.getSlug()))
+                    .map(item -> new FilterOptionDto(item.getSlug(), item.getName()))
+                    .toList();
+            List<FilterOptionDto> purposes = purposeTagRepository.findAll().stream()
+                    .map(item -> new FilterOptionDto(item.getSlug(), item.getName()))
+                    .toList();
 
-        return new FilterCatalogDto(
-                List.of(
-                        new FilterOptionDto("2", "2 người"),
-                        new FilterOptionDto("3-4", "3–4 người"),
-                        new FilterOptionDto("5", "5 người"),
-                        new FilterOptionDto("6-10", "6–10 người"),
-                        new FilterOptionDto("10+", "10+ người")
-                ),
-                contexts,
-                purposes,
-                List.of(
-                        new FilterOptionDto("under-5", "Dưới 5 phút"),
-                        new FilterOptionDto("5-7", "5–7 phút"),
-                        new FilterOptionDto("8-10", "8–10 phút"),
-                        new FilterOptionDto("10-15", "10–15 phút"),
-                        new FilterOptionDto("over-15", "Trên 15 phút")
-                )
-        );
+            filterCatalogCache = new FilterCatalogDto(
+                    List.of(
+                            new FilterOptionDto("2", "2 người"),
+                            new FilterOptionDto("3-4", "3–4 người"),
+                            new FilterOptionDto("5", "5 người"),
+                            new FilterOptionDto("6-10", "6–10 người"),
+                            new FilterOptionDto("10+", "10+ người")
+                    ),
+                    contexts,
+                    purposes,
+                    List.of(
+                            new FilterOptionDto("under-5", "Dưới 5 phút"),
+                            new FilterOptionDto("5-7", "5–7 phút"),
+                            new FilterOptionDto("8-10", "8–10 phút"),
+                            new FilterOptionDto("10-15", "10–15 phút"),
+                            new FilterOptionDto("over-15", "Trên 15 phút")
+                    )
+            );
+            return filterCatalogCache;
+        }
     }
 
     private List<String> normalizeList(String raw, Map<String, String> aliases) {

@@ -254,6 +254,12 @@ legend {
   }
 }
 
+.skeleton-block {
+  display: grid;
+  gap: 10px;
+  margin: 8px 0 4px;
+}
+
 .card {
   display: block;
   background: var(--paper);

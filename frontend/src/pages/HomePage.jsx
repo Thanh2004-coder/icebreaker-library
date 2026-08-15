@@ -3,7 +3,8 @@ import Header from "../components/Header.jsx";
 import Filters from "../components/Filters.jsx";
 import GameCard from "../components/GameCard.jsx";
 import Pagination from "../components/Pagination.jsx";
-import { fetchFilters, fetchGames } from "../api.js";
+import { filterGames, paginateGames } from "../cache/filterGames.js";
+import { loadFilterCatalog, loadGameCatalog, pageSize } from "../cache/gameStore.js";
 
 const EMPTY_FILTERS = {
   players: "",
@@ -17,8 +18,8 @@ export default function HomePage() {
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState(EMPTY_FILTERS);
   const [page, setPage] = useState(0);
+  const [catalog, setCatalog] = useState(null);
   const [filters, setFilters] = useState(null);
-  const [result, setResult] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
   const [slowBackend, setSlowBackend] = useState(false);
@@ -31,11 +32,6 @@ export default function HomePage() {
     return () => clearTimeout(timer);
   }, [searchInput]);
 
-  const queryKey = useMemo(
-    () => JSON.stringify({ search, selected, page }),
-    [search, selected, page]
-  );
-
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
@@ -45,18 +41,10 @@ export default function HomePage() {
       if (!cancelled) setSlowBackend(true);
     }, 4000);
 
-    fetchGames({
-      search,
-      players: selected.players,
-      contexts: selected.context ? [selected.context] : [],
-      purposes: selected.purposes,
-      duration: selected.duration,
-      page,
-      size: 10,
-    })
-      .then((data) => {
+    loadGameCatalog()
+      .then((games) => {
         if (!cancelled) {
-          setResult(data);
+          setCatalog(games);
           setLoading(false);
           setSlowBackend(false);
         }
@@ -64,39 +52,56 @@ export default function HomePage() {
       .catch((err) => {
         if (!cancelled) {
           setError(err.message);
-          setResult(null);
+          setCatalog(null);
           setLoading(false);
           setSlowBackend(false);
         }
       });
+
     return () => {
       cancelled = true;
       clearTimeout(slowTimer);
     };
-  }, [queryKey, search, selected, page]);
+  }, []);
 
-  // Load filter catalog after the first games response so /api/games owns the critical path.
   useEffect(() => {
-    if (loading || filters != null) return;
+    if (loading) return;
     let cancelled = false;
-    fetchFilters()
+    loadFilterCatalog()
       .then((data) => {
         if (!cancelled) setFilters(data);
       })
       .catch(() => {
-        if (!cancelled) setFilters(null);
+        /* filter UI stays hidden until catalog arrives */
       });
     return () => {
       cancelled = true;
     };
-  }, [loading, filters]);
+  }, [loading]);
+
+  const filtered = useMemo(
+    () => filterGames(catalog || [], { search, selected, filterCatalog: filters }),
+    [catalog, search, selected, filters]
+  );
+
+  const result = useMemo(
+    () => paginateGames(filtered, page, pageSize()),
+    [filtered, page]
+  );
+
+  // If filters catalog arrives late, context/purpose matching improves — keep page in range.
+  useEffect(() => {
+    if (page > 0 && page >= result.totalPages && result.totalPages > 0) {
+      setPage(result.totalPages - 1);
+    }
+  }, [page, result.totalPages]);
 
   const onFilterChange = (next) => {
     setSelected(next);
     setPage(0);
   };
 
-  const showSkeleton = loading && !result?.content?.length;
+  const showSkeleton = loading && !catalog?.length;
 
   return (
     <div className="page">
@@ -121,7 +126,7 @@ export default function HomePage() {
               ? slowBackend
                 ? "Máy chủ đang khởi động (Render free)… thường 20–60 giây lần đầu sau khi ngủ."
                 : "Đang tải…"
-              : `Tìm thấy ${result?.totalElements ?? 0} trò chơi`}
+              : `Tìm thấy ${result.totalElements} trò chơi`}
           </p>
           <button
             type="button"
@@ -142,7 +147,7 @@ export default function HomePage() {
         {slowBackend && loading ? (
           <p className="cold-start-hint" role="status">
             Backend trên Render Free đang cold start. Trang đã sẵn sàng — danh sách sẽ hiện khi API
-            /api/games trả về. Lần sau (máy chủ còn warm) thường dưới 2 giây.
+            /api/games trả về. Sau đó filter/search chạy ngay trên máy bạn (không gọi lại server).
           </p>
         ) : null}
 
@@ -156,19 +161,15 @@ export default function HomePage() {
                 </div>
               ))
             : null}
-          {!loading && result?.content?.length === 0 ? (
+          {!loading && result.content.length === 0 ? (
             <p className="empty">Không có trò chơi khớp. Thử nới bộ lọc hoặc xóa từ khóa.</p>
           ) : null}
-          {result?.content?.map((game) => (
+          {result.content.map((game) => (
             <GameCard key={game.id} game={game} />
           ))}
         </section>
 
-        <Pagination
-          page={result?.page ?? 0}
-          totalPages={result?.totalPages ?? 0}
-          onPageChange={setPage}
-        />
+        <Pagination page={result.page} totalPages={result.totalPages} onPageChange={setPage} />
       </main>
     </div>
   );
