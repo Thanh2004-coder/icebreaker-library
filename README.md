@@ -206,7 +206,7 @@ Gợi ý: [Render](https://render.com) Web Service (free) hoặc [Railway](https
 
 Lưu URL backend, ví dụ `https://warmup-api.onrender.com`.
 
-Free Render ngủ sau idle: request đầu tiên có thể chậm 30–60 giây. Đủ cho ~100 người / 14 ngày nếu không cần SLA.
+Free Render ngủ sau ~15 phút idle. Đo thực tế: `/api/health` cold start có thể **20–135 giây**; khi warm thường dưới 1 giây. Workflow `.github/workflows/keep-render-awake.yml` ping `/api/health` mỗi 10 phút để giảm sleep (cần push GitHub + bật Actions).
 
 ## 13. Deploy frontend lên Vercel Hobby ($0)
 

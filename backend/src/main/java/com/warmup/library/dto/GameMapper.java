@@ -5,6 +5,7 @@ import com.warmup.library.domain.Game;
 import com.warmup.library.domain.PurposeTag;
 import com.warmup.library.domain.Review;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -13,6 +14,10 @@ public final class GameMapper {
     private GameMapper() {
     }
 
+    /**
+     * List view: use denormalized context/purpose strings to avoid N+1 lazy loads
+     * (findAll + Specification has no EntityGraph).
+     */
     public static GameSummaryDto toSummary(Game game, RatingStats stats) {
         RatingStats safe = stats == null ? RatingStats.empty() : stats;
         return new GameSummaryDto(
@@ -30,8 +35,8 @@ public final class GameMapper {
                 game.getPreparationTime(),
                 roundRating(safe.averageRating()),
                 safe.reviewCount(),
-                contextNames(game),
-                purposeNames(game)
+                splitCsv(game.getContext()),
+                splitCsv(game.getPurpose())
         );
     }
 
@@ -90,6 +95,17 @@ public final class GameMapper {
         return game.getPurposes().stream()
                 .sorted(Comparator.comparing(PurposeTag::getName))
                 .map(PurposeTag::getName)
+                .toList();
+    }
+
+    private static List<String> splitCsv(String value) {
+        if (value == null || value.isBlank()) {
+            return List.of();
+        }
+        return Arrays.stream(value.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .sorted()
                 .toList();
     }
 }

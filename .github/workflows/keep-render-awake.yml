@@ -1,0 +1,25 @@
+# Ping Render free tier so the Spring Boot service does not sleep after ~15 min idle.
+# Measured cold start: /api/health can take 20–135s; warm is typically under 1s.
+name: Keep Render awake
+
+on:
+  schedule:
+    # Every 10 minutes (UTC)
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wake backend health endpoint
+        env:
+          BACKEND_URL: https://icebreaker-library-2.onrender.com
+        run: |
+          set -e
+          echo "Pinging $BACKEND_URL/api/health"
+          # Allow long wait on rare cold start; success = HTTP 200
+          curl -fsS --max-time 180 -o /tmp/health.json -w "http=%{http_code} time=%{time_total}s\n" \
+            "$BACKEND_URL/api/health"
+          cat /tmp/health.json
+          echo

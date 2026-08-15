@@ -21,6 +21,7 @@ export default function HomePage() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [slowBackend, setSlowBackend] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -53,6 +54,11 @@ export default function HomePage() {
     let cancelled = false;
     setLoading(true);
     setError("");
+    setSlowBackend(false);
+    const slowTimer = setTimeout(() => {
+      if (!cancelled) setSlowBackend(true);
+    }, 4000);
+
     fetchGames({
       search,
       players: selected.players,
@@ -66,6 +72,7 @@ export default function HomePage() {
         if (!cancelled) {
           setResult(data);
           setLoading(false);
+          setSlowBackend(false);
         }
       })
       .catch((err) => {
@@ -73,10 +80,12 @@ export default function HomePage() {
           setError(err.message);
           setResult(null);
           setLoading(false);
+          setSlowBackend(false);
         }
       });
     return () => {
       cancelled = true;
+      clearTimeout(slowTimer);
     };
   }, [queryKey, search, selected, page]);
 
@@ -84,6 +93,8 @@ export default function HomePage() {
     setSelected(next);
     setPage(0);
   };
+
+  const showSkeleton = loading && !result?.content?.length;
 
   return (
     <div className="page">
@@ -105,7 +116,9 @@ export default function HomePage() {
         <div className="result-bar">
           <p>
             {loading
-              ? "Đang tải…"
+              ? slowBackend
+                ? "Máy chủ đang khởi động (Render free)… thường 20–60 giây lần đầu sau khi ngủ."
+                : "Đang tải…"
               : `Tìm thấy ${result?.totalElements ?? 0} trò chơi`}
           </p>
           <button
@@ -124,7 +137,23 @@ export default function HomePage() {
 
         {error ? <p className="error">{error} Hãy chắc Spring Boot đang chạy ở cổng 8080.</p> : null}
 
-        <section className="grid">
+        {slowBackend && loading ? (
+          <p className="cold-start-hint" role="status">
+            Backend trên Render Free đang cold start. Trang đã sẵn sàng — danh sách sẽ hiện khi API
+            /api/games trả về. Lần sau (máy chủ còn warm) thường dưới 2 giây.
+          </p>
+        ) : null}
+
+        <section className="grid" aria-busy={loading}>
+          {showSkeleton
+            ? Array.from({ length: 4 }, (_, i) => (
+                <div key={`skeleton-${i}`} className="card skeleton-card" aria-hidden="true">
+                  <div className="skeleton-line skeleton-title" />
+                  <div className="skeleton-line" />
+                  <div className="skeleton-line skeleton-short" />
+                </div>
+              ))
+            : null}
           {!loading && result?.content?.length === 0 ? (
             <p className="empty">Không có trò chơi khớp. Thử nới bộ lọc hoặc xóa từ khóa.</p>
           ) : null}

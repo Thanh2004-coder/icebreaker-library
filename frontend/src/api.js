@@ -1,21 +1,89 @@
-const API_BASE = import.meta.env.VITE_API_URL || "";
+/**
+ * API client for Spring Boot backend.
+ *
+ * Local (Vite): leave VITE_API_URL empty → requests go to /api/... and Vite proxies to localhost:8080.
+ * Production (Vercel): set VITE_API_URL to the public Spring Boot base URL, e.g.
+ *   https://your-service.onrender.com
+ * with NO trailing slash. Paths are always /api/...
+ */
+
+function normalizeApiBase(raw) {
+  if (raw == null) return "";
+  const trimmed = String(raw).trim();
+  if (!trimmed) return "";
+  return trimmed.replace(/\/+$/, "");
+}
+
+const API_BASE = normalizeApiBase(import.meta.env.VITE_API_URL);
+
+/**
+ * Kick Render free-tier wake as early as this module evaluates (before React effects).
+ * Fire-and-forget; does not block rendering. Cold start was measured at 20–135s idle.
+ */
+if (import.meta.env.PROD && API_BASE) {
+  fetch(`${API_BASE}/api/health`).catch(() => {});
+}
+
+function apiUrl(path) {
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return `${API_BASE}${normalizedPath}`;
+}
 
 async function parseError(response) {
-  try {
-    const body = await response.json();
-    if (body?.message) return body.message;
-  } catch {
-    /* ignore */
+  const contentType = response.headers.get("content-type") || "";
+  const text = await response.text();
+
+  if (contentType.includes("application/json") || text.trim().startsWith("{") || text.trim().startsWith("[")) {
+    try {
+      const body = JSON.parse(text);
+      if (body?.message) return body.message;
+    } catch {
+      /* fall through */
+    }
   }
-  if (response.status === 404) return "Không tìm thấy trò chơi.";
+
+  if (text.trim().toLowerCase().startsWith("<!doctype") || text.includes("Whitelabel Error Page")) {
+    if (!API_BASE && import.meta.env.PROD) {
+      return "Frontend chưa cấu hình VITE_API_URL (URL Spring Boot trên Render). Đang nhận HTML thay vì JSON từ API.";
+    }
+    return `API trả về HTML (HTTP ${response.status}) thay vì JSON. Kiểm tra VITE_API_URL và endpoint backend /api/...`;
+  }
+
+  if (response.status === 404) return "Không tìm thấy tài nguyên API (404).";
   if (response.status === 400) return "Dữ liệu gửi lên chưa hợp lệ.";
-  return "Không tải được dữ liệu từ server.";
+  return `Không tải được dữ liệu từ server (HTTP ${response.status}).`;
 }
 
 async function getJson(path) {
-  const response = await fetch(`${API_BASE}${path}`);
+  if (!API_BASE && import.meta.env.PROD) {
+    throw new Error(
+      "Thiếu VITE_API_URL. Trên Vercel hãy set VITE_API_URL=https://<backend>.onrender.com rồi Redeploy."
+    );
+  }
+
+  const response = await fetch(apiUrl(path));
   if (!response.ok) throw new Error(await parseError(response));
-  return response.json();
+
+  const contentType = response.headers.get("content-type") || "";
+  const text = await response.text();
+  if (!contentType.includes("application/json") && !text.trim().startsWith("{") && !text.trim().startsWith("[")) {
+    throw new Error(buildHtmlMismatchMessage(response.status, text));
+  }
+  try {
+    return JSON.parse(text);
+  } catch {
+    throw new Error("Phản hồi API không phải JSON hợp lệ.");
+  }
+}
+
+function buildHtmlMismatchMessage(status, text) {
+  if (text.trim().toLowerCase().startsWith("<!doctype") || text.includes("Whitelabel Error Page")) {
+    if (!API_BASE && import.meta.env.PROD) {
+      return "Frontend chưa cấu hình VITE_API_URL (URL Spring Boot trên Render). Đang nhận HTML thay vì JSON từ API.";
+    }
+    return `API trả về HTML (HTTP ${status}) thay vì JSON. Kiểm tra VITE_API_URL và endpoint backend /api/...`;
+  }
+  return `Phản hồi API không phải JSON (HTTP ${status}).`;
 }
 
 export function fetchGames(params) {
@@ -44,13 +112,25 @@ export function fetchReviews(gameId) {
 }
 
 export async function createReview(gameId, payload) {
-  const response = await fetch(`${API_BASE}/api/games/${gameId}/reviews`, {
+  if (!API_BASE && import.meta.env.PROD) {
+    throw new Error(
+      "Thiếu VITE_API_URL. Trên Vercel hãy set VITE_API_URL=https://<backend>.onrender.com rồi Redeploy."
+    );
+  }
+
+  const response = await fetch(apiUrl(`/api/games/${gameId}/reviews`), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
   if (!response.ok) throw new Error(await parseError(response));
-  return response.json();
+
+  const contentType = response.headers.get("content-type") || "";
+  const text = await response.text();
+  if (!contentType.includes("application/json") && !text.trim().startsWith("{")) {
+    throw new Error(buildHtmlMismatchMessage(response.status, text));
+  }
+  return JSON.parse(text);
 }
 
 export function formatPlayers(min, max) {
@@ -67,4 +147,8 @@ export function formatDuration(min, max) {
 export function formatRating(averageRating, reviewCount) {
   if (!reviewCount) return "Chưa có đánh giá";
   return `⭐ ${Number(averageRating).toFixed(1)} (${reviewCount} reviews)`;
+}
+
+export function getApiBaseForDebug() {
+  return API_BASE || "(relative /api → Vite proxy in local, or MISSING VITE_API_URL in production)";
 }
