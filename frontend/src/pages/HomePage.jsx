@@ -3,8 +3,19 @@ import Header from "../components/Header.jsx";
 import Filters from "../components/Filters.jsx";
 import GameCard from "../components/GameCard.jsx";
 import Pagination from "../components/Pagination.jsx";
+import SoftStatusBanner from "../components/SoftStatusBanner.jsx";
 import { filterGames, paginateGames } from "../cache/filterGames.js";
-import { loadFilterCatalog, loadGameCatalog, pageSize } from "../cache/gameStore.js";
+import {
+  DEFAULT_FILTER_CATALOG,
+  getMemoryCatalog,
+  loadFilterCatalog,
+  loadGameCatalog,
+  mergeFilterCatalog,
+  pageSize,
+  readPersistedFilters,
+  readPersistedGames,
+  wakeBackendEarly,
+} from "../cache/gameStore.js";
 
 const EMPTY_FILTERS = {
   players: "",
@@ -13,16 +24,30 @@ const EMPTY_FILTERS = {
   duration: "",
 };
 
+const SKELETON_MAX_MS = 3500;
+const COLD_HINT_MS = 2500;
+
+function initialCatalog() {
+  return getMemoryCatalog() || readPersistedGames() || [];
+}
+
+function initialFilters() {
+  return mergeFilterCatalog(readPersistedFilters() || DEFAULT_FILTER_CATALOG);
+}
+
 export default function HomePage() {
   const [searchInput, setSearchInput] = useState("");
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState(EMPTY_FILTERS);
   const [page, setPage] = useState(0);
-  const [catalog, setCatalog] = useState(null);
-  const [filters, setFilters] = useState(null);
+  const [catalog, setCatalog] = useState(initialCatalog);
+  const [filters, setFilters] = useState(initialFilters);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [slowBackend, setSlowBackend] = useState(false);
+  const [refreshing, setRefreshing] = useState(true);
+  const [fromCache, setFromCache] = useState(() => initialCatalog().length > 0);
+  const [showColdHint, setShowColdHint] = useState(false);
+  const [showSkeleton, setShowSkeleton] = useState(() => initialCatalog().length === 0);
+  const [loadToken, setLoadToken] = useState(0);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -34,50 +59,62 @@ export default function HomePage() {
 
   useEffect(() => {
     let cancelled = false;
-    setLoading(true);
-    setError("");
-    setSlowBackend(false);
-    const slowTimer = setTimeout(() => {
-      if (!cancelled) setSlowBackend(true);
-    }, 4000);
+    const hasCache = (getMemoryCatalog() || readPersistedGames() || []).length > 0;
 
-    loadGameCatalog()
+    setRefreshing(true);
+    setError("");
+    setFromCache(hasCache);
+    setShowColdHint(false);
+    setShowSkeleton(!hasCache);
+
+    const coldTimer = setTimeout(() => {
+      if (!cancelled) setShowColdHint(true);
+    }, COLD_HINT_MS);
+
+    const skeletonTimer = setTimeout(() => {
+      if (!cancelled) setShowSkeleton(false);
+    }, SKELETON_MAX_MS);
+
+    wakeBackendEarly();
+
+    loadGameCatalog({ force: loadToken > 0 })
       .then((games) => {
-        if (!cancelled) {
-          setCatalog(games);
-          setLoading(false);
-          setSlowBackend(false);
-        }
+        if (cancelled) return;
+        setCatalog(games);
+        setFromCache(false);
+        setRefreshing(false);
+        setShowColdHint(false);
+        setShowSkeleton(false);
+        setError("");
       })
       .catch((err) => {
-        if (!cancelled) {
-          setError(err.message);
-          setCatalog(null);
-          setLoading(false);
-          setSlowBackend(false);
+        if (cancelled) return;
+        const cached = getMemoryCatalog() || readPersistedGames() || [];
+        if (cached.length) {
+          setCatalog(cached);
+          setFromCache(true);
+          setError("");
+        } else {
+          setError(err.message || "Không tải được danh sách trò chơi.");
         }
+        setRefreshing(false);
+        setShowSkeleton(false);
       });
 
-    return () => {
-      cancelled = true;
-      clearTimeout(slowTimer);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (loading) return;
-    let cancelled = false;
-    loadFilterCatalog()
+    loadFilterCatalog({ force: loadToken > 0 })
       .then((data) => {
-        if (!cancelled) setFilters(data);
+        if (!cancelled) setFilters(mergeFilterCatalog(data));
       })
       .catch(() => {
-        /* filter UI stays hidden until catalog arrives */
+        /* keep default / persisted filters */
       });
+
     return () => {
       cancelled = true;
+      clearTimeout(coldTimer);
+      clearTimeout(skeletonTimer);
     };
-  }, [loading]);
+  }, [loadToken]);
 
   const filtered = useMemo(
     () => filterGames(catalog || [], { search, selected, filterCatalog: filters }),
@@ -89,7 +126,6 @@ export default function HomePage() {
     [filtered, page]
   );
 
-  // If filters catalog arrives late, context/purpose matching improves — keep page in range.
   useEffect(() => {
     if (page > 0 && page >= result.totalPages && result.totalPages > 0) {
       setPage(result.totalPages - 1);
@@ -101,7 +137,11 @@ export default function HomePage() {
     setPage(0);
   };
 
-  const showSkeleton = loading && !catalog?.length;
+  const onRetry = () => setLoadToken((n) => n + 1);
+
+  const hasGames = result.content.length > 0;
+  const emptyAfterLoad = !refreshing && !showSkeleton && !hasGames && !error;
+  const showSoftBanner = (fromCache && hasGames) || (refreshing && hasGames);
 
   return (
     <div className="page">
@@ -122,10 +162,8 @@ export default function HomePage() {
 
         <div className="result-bar">
           <p>
-            {loading
-              ? slowBackend
-                ? "Máy chủ đang khởi động (Render free)… thường 20–60 giây lần đầu sau khi ngủ."
-                : "Đang tải…"
+            {refreshing && !hasGames
+              ? "Đang kết nối máy chủ…"
               : `Tìm thấy ${result.totalElements} trò chơi`}
           </p>
           <button
@@ -142,17 +180,33 @@ export default function HomePage() {
           </button>
         </div>
 
-        {error ? <p className="error">{error} Hãy chắc Spring Boot đang chạy ở cổng 8080.</p> : null}
+        <SoftStatusBanner show={showSoftBanner} />
 
-        {slowBackend && loading ? (
+        {showColdHint && refreshing && !hasGames ? (
           <p className="cold-start-hint" role="status">
-            Backend trên Render Free đang cold start. Trang đã sẵn sàng — danh sách sẽ hiện khi API
-            /api/games trả về. Sau đó filter/search chạy ngay trên máy bạn (không gọi lại server).
+            Máy chủ đang khởi động. Bạn vẫn dùng được tìm kiếm và bộ lọc khi đã có dữ liệu lưu.
           </p>
         ) : null}
 
-        <section className="grid" aria-busy={loading}>
-          {showSkeleton
+        {fromCache && !refreshing ? (
+          <p className="cache-hint" role="status">
+            <button type="button" className="text-btn inline" onClick={onRetry}>
+              Tải lại từ máy chủ
+            </button>
+          </p>
+        ) : null}
+
+        {error ? (
+          <div className="error-panel" role="alert">
+            <p className="error">{error}</p>
+            <button type="button" className="retry-btn" onClick={onRetry}>
+              Thử lại
+            </button>
+          </div>
+        ) : null}
+
+        <section className="grid" aria-busy={refreshing && !hasGames}>
+          {showSkeleton && !hasGames
             ? Array.from({ length: 4 }, (_, i) => (
                 <div key={`skeleton-${i}`} className="card skeleton-card" aria-hidden="true">
                   <div className="skeleton-line skeleton-title" />
@@ -161,7 +215,7 @@ export default function HomePage() {
                 </div>
               ))
             : null}
-          {!loading && result.content.length === 0 ? (
+          {emptyAfterLoad ? (
             <p className="empty">Không có trò chơi khớp. Thử nới bộ lọc hoặc xóa từ khóa.</p>
           ) : null}
           {result.content.map((game) => (

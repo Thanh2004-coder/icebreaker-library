@@ -39,6 +39,7 @@ export default function Filters({ filters, selected, onChange }) {
         </div>
       </fieldset>
 
+      {contexts.length > 0 ? (
       <fieldset>
         <legend>Bối cảnh</legend>
         <div className="chips">
@@ -59,7 +60,9 @@ export default function Filters({ filters, selected, onChange }) {
           </button>
         </div>
       </fieldset>
+      ) : null}
 
+      {filters.purposes?.length > 0 ? (
       <fieldset>
         <legend>Mục đích</legend>
         <div className="chips">
@@ -75,6 +78,7 @@ export default function Filters({ filters, selected, onChange }) {
           ))}
         </div>
       </fieldset>
+      ) : null}
 
       <fieldset>
         <legend>Thời gian</legend>

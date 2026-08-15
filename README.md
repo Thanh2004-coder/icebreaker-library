@@ -64,41 +64,39 @@ npm -v
 
 Không cài Express. Không chạy Node làm API.
 
-## 4. Cài PostgreSQL local (development)
+## 4. Cài MySQL local (development)
 
-Cài PostgreSQL 15/16, service chạy cổng `5432`.
+Cài MySQL 8, service chạy cổng `3306` (ví dụ service Windows `MySQL80`).
 
-Không dùng MySQL.
+Username mặc định local: `root` / password: `2004` (đúng với `application.properties`).
 
 ## 5. Tạo database
 
-psql hoặc pgAdmin:
+MySQL CLI hoặc Workbench:
 
 ```sql
-CREATE DATABASE warmup_library;
+CREATE DATABASE IF NOT EXISTS warmup_library CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
 
-Tùy chọn (Spring Boot `ddl-auto=update` cũng tự tạo bảng):
+Hoặc bỏ qua bước này: JDBC URL đã có `createDatabaseIfNotExist=true`.
 
-```sql
-\c warmup_library
-\i database/schema.sql
-\i database/seed.sql
-```
+Spring Boot `ddl-auto=update` + `DataSeeder` sẽ tạo bảng và seed 20 game.
+
+**Quan trọng:** Trong IDE Run Configuration, **xóa** biến môi trường cũ kiểu:
+`DB_URL=jdbc:postgresql://...`, `DB_USERNAME=postgres` — chúng gây lỗi `password authentication failed for user "postgres"`.
 
 ## 6. Chạy Spring Boot
 
-Sao chép biến từ `backend/.env.example`. PowerShell:
-
 ```powershell
 $env:JAVA_HOME = "C:\Program Files\Java\jdk-17"
-$env:DB_URL = "jdbc:postgresql://localhost:5432/warmup_library"
-$env:DB_USERNAME = "postgres"
-$env:DB_PASSWORD = "your_postgres_password"
-$env:CORS_ORIGINS = "http://localhost:5173"
+# Không set DB_URL PostgreSQL
 cd backend
 .\mvnw.cmd spring-boot:run
 ```
+
+Cấu hình MySQL đã hardcode trong `backend/src/main/resources/application.properties`:
+- URL: `jdbc:mysql://localhost:3306/warmup_library?...`
+- user: `root` / password: `2004`
 
 Hoặc mở `backend/pom.xml` trong IntelliJ và Run `WarmupLibraryApplication`.
 

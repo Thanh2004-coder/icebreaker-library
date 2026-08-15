@@ -216,6 +216,57 @@ legend {
   line-height: 1.45;
 }
 
+.soft-status-banner {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--teal-2) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--teal-2) 35%, var(--line));
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.cache-hint {
+  margin: 0 0 12px;
+  font-size: 0.92rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.text-btn.inline {
+  display: inline;
+  padding: 0;
+  font: inherit;
+  font-weight: 700;
+}
+
+.error-panel {
+  margin: 0 0 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, #c45c4a 35%, var(--line));
+  background: color-mix(in srgb, #c45c4a 8%, transparent);
+}
+
+.error-panel .error {
+  margin: 0 0 10px;
+}
+
+.retry-btn {
+  border: 0;
+  border-radius: 10px;
+  padding: 8px 14px;
+  background: var(--coral);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.retry-btn:hover {
+  filter: brightness(1.05);
+}
+
 .skeleton-card {
   pointer-events: none;
   min-height: 140px;
