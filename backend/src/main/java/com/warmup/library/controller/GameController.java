@@ -5,6 +5,7 @@ import com.warmup.library.dto.GameDetailDto;
 import com.warmup.library.dto.GameSummaryDto;
 import com.warmup.library.dto.PageResponse;
 import com.warmup.library.service.GameService;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,9 +30,15 @@ public class GameController {
             @RequestParam(required = false) String purpose,
             @RequestParam(required = false) String duration,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(defaultValue = "10") int size,
+            HttpServletResponse response
     ) {
-        return gameService.search(search, players, context, purpose, duration, page, size);
+        long started = System.nanoTime();
+        PageResponse<GameSummaryDto> body = gameService.search(search, players, context, purpose, duration, page, size);
+        long appMs = (System.nanoTime() - started) / 1_000_000L;
+        response.setHeader("Server-Timing", "app;desc=\"/api/games\";dur=" + appMs);
+        response.setHeader("Access-Control-Expose-Headers", "Server-Timing");
+        return body;
     }
 
     @GetMapping("/games/{id}")

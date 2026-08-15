@@ -21,7 +21,9 @@ public class CorsConfig {
                 registry.addMapping("/api/**")
                         .allowedOriginPatterns(allowed)
                         .allowedMethods("GET", "POST", "OPTIONS")
-                        .allowedHeaders("*");
+                        .allowedHeaders("*")
+                        .exposedHeaders("Server-Timing")
+                        .allowCredentials(false);
             }
         };
     }

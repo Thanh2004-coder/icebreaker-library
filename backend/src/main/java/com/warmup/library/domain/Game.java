@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.persistence.Index;
 
 import java.time.Instant;
 import java.util.Comparator;
@@ -20,7 +21,15 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "games")
+@Table(
+        name = "games",
+        indexes = {
+                @Index(name = "idx_games_name", columnList = "name"),
+                @Index(name = "idx_games_name_search", columnList = "name_search"),
+                @Index(name = "idx_games_min_players", columnList = "min_players"),
+                @Index(name = "idx_games_duration_min", columnList = "duration_min")
+        }
+)
 public class Game {
 
     @Id

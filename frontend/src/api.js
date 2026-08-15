@@ -16,14 +16,6 @@ function normalizeApiBase(raw) {
 
 const API_BASE = normalizeApiBase(import.meta.env.VITE_API_URL);
 
-/**
- * Kick Render free-tier wake as early as this module evaluates (before React effects).
- * Fire-and-forget; does not block rendering. Cold start was measured at 20–135s idle.
- */
-if (import.meta.env.PROD && API_BASE) {
-  fetch(`${API_BASE}/api/health`).catch(() => {});
-}
-
 function apiUrl(path) {
   const normalizedPath = path.startsWith("/") ? path : `/${path}`;
   return `${API_BASE}${normalizedPath}`;

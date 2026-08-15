@@ -18,8 +18,12 @@ jobs:
         run: |
           set -e
           echo "Pinging $BACKEND_URL/api/health"
-          # Allow long wait on rare cold start; success = HTTP 200
           curl -fsS --max-time 180 -o /tmp/health.json -w "http=%{http_code} time=%{time_total}s\n" \
             "$BACKEND_URL/api/health"
           cat /tmp/health.json
           echo
+          # Touch /api/games so Hikari keeps a warm Neon connection (not just JVM).
+          echo "Pinging $BACKEND_URL/api/games"
+          curl -fsS --max-time 180 -o /tmp/games.json -w "http=%{http_code} time=%{time_total}s\n" \
+            "$BACKEND_URL/api/games?page=0&size=1"
+          echo "games bytes=$(wc -c </tmp/games.json)"

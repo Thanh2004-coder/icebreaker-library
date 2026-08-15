@@ -38,20 +38,6 @@ export default function HomePage() {
 
   useEffect(() => {
     let cancelled = false;
-    fetchFilters()
-      .then((data) => {
-        if (!cancelled) setFilters(data);
-      })
-      .catch(() => {
-        if (!cancelled) setFilters(null);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  useEffect(() => {
-    let cancelled = false;
     setLoading(true);
     setError("");
     setSlowBackend(false);
@@ -88,6 +74,22 @@ export default function HomePage() {
       clearTimeout(slowTimer);
     };
   }, [queryKey, search, selected, page]);
+
+  // Load filter catalog after the first games response so /api/games owns the critical path.
+  useEffect(() => {
+    if (loading || filters != null) return;
+    let cancelled = false;
+    fetchFilters()
+      .then((data) => {
+        if (!cancelled) setFilters(data);
+      })
+      .catch(() => {
+        if (!cancelled) setFilters(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [loading, filters]);
 
   const onFilterChange = (next) => {
     setSelected(next);

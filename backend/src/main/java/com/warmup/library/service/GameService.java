@@ -7,14 +7,10 @@ import com.warmup.library.dto.GameDetailDto;
 import com.warmup.library.dto.GameMapper;
 import com.warmup.library.dto.GameSummaryDto;
 import com.warmup.library.dto.PageResponse;
-import com.warmup.library.dto.RatingStats;
 import com.warmup.library.repository.ContextTagRepository;
 import com.warmup.library.repository.GameRepository;
-import com.warmup.library.repository.GameSpecifications;
+import com.warmup.library.repository.GameSummaryQuery;
 import com.warmup.library.repository.PurposeTagRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,17 +56,20 @@ public class GameService {
     );
 
     private final GameRepository gameRepository;
+    private final GameSummaryQuery gameSummaryQuery;
     private final ContextTagRepository contextTagRepository;
     private final PurposeTagRepository purposeTagRepository;
     private final ReviewService reviewService;
 
     public GameService(
             GameRepository gameRepository,
+            GameSummaryQuery gameSummaryQuery,
             ContextTagRepository contextTagRepository,
             PurposeTagRepository purposeTagRepository,
             ReviewService reviewService
     ) {
         this.gameRepository = gameRepository;
+        this.gameSummaryQuery = gameSummaryQuery;
         this.contextTagRepository = contextTagRepository;
         this.purposeTagRepository = purposeTagRepository;
         this.reviewService = reviewService;
@@ -89,32 +88,14 @@ public class GameService {
         int safePage = Math.max(page, 0);
         int safeSize = size <= 0 ? 10 : Math.min(size, 50);
 
-        var spec = GameSpecifications.withFilters(
+        return gameSummaryQuery.search(
                 search,
                 players,
                 normalizeList(context, CONTEXT_ALIASES),
                 normalizeList(purpose, PURPOSE_ALIASES),
-                duration
-        );
-
-        Page<Game> result = gameRepository.findAll(
-                spec,
-                PageRequest.of(safePage, safeSize, Sort.by("name").ascending())
-        );
-
-        List<Long> ids = result.getContent().stream().map(Game::getId).toList();
-        Map<Long, RatingStats> stats = reviewService.statsFor(ids);
-
-        List<GameSummaryDto> content = result.getContent().stream()
-                .map(game -> GameMapper.toSummary(game, stats.getOrDefault(game.getId(), RatingStats.empty())))
-                .toList();
-
-        return new PageResponse<>(
-                content,
-                result.getNumber(),
-                result.getSize(),
-                result.getTotalElements(),
-                result.getTotalPages()
+                duration,
+                safePage,
+                safeSize
         );
     }
 
