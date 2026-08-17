@@ -1,14 +1,7 @@
 import { Link } from "react-router-dom";
 import { formatDuration, formatPlayers, formatRating } from "../api.js";
-import { FALLBACK_GAME_IMAGE, getGameImage } from "../data/staticCatalog.js";
+import { FALLBACK_GAME_IMAGE, getGameImage, onCatalogImageError } from "../data/staticCatalog.js";
 import StarRating from "./StarRating.jsx";
-
-function onGameImageError(event) {
-  const img = event.currentTarget;
-  if (img.dataset.fallback === "1") return;
-  img.dataset.fallback = "1";
-  img.src = FALLBACK_GAME_IMAGE;
-}
 
 export default function GameCard({ game }) {
   const purposes = game.purposes?.length ? game.purposes : (game.purpose ? game.purpose.split(", ") : []);
@@ -22,7 +15,7 @@ export default function GameCard({ game }) {
           alt={game.name}
           width="640"
           height="360"
-          onError={onGameImageError}
+          onError={onCatalogImageError(FALLBACK_GAME_IMAGE)}
         />
       </div>
       <div className="card-body">

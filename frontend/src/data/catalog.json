@@ -5,7 +5,12 @@
       "name": "Truyền tin nhắn",
       "image": "/images/games/1.svg",
       "description": "Chinese Whisper bằng lời: thì thầm một câu ngắn lần lượt trong nhóm, rồi so câu cuối với câu gốc.",
-      "howToPlay": "1. Cả nhóm đứng hoặc ngồi thành vòng trong lớp.\n2. Leader nghĩ một câu ngắn, dễ hiểu rồi thì thầm vào tai người bên cạnh.\n3. Lần lượt thì thầm đến người cuối. Người cuối nói to câu nhận được.\n4. Leader đọc câu gốc. Cả nhóm cười với chỗ “lạc” — không ai bị phạt.",
+      "howToPlay": [
+        "Cả nhóm đứng hoặc ngồi thành vòng trong lớp.",
+        "Leader nghĩ một câu ngắn, dễ hiểu rồi thì thầm vào tai người bên cạnh.",
+        "Lần lượt thì thầm đến người cuối. Người cuối nói to câu nhận được.",
+        "Leader đọc câu gốc. Cả nhóm cười với chỗ “lạc” — không ai bị phạt."
+      ],
       "durationMin": 8,
       "durationMax": 8,
       "minPlayers": 5,
@@ -28,14 +33,22 @@
         "Tạo tiếng cười"
       ],
       "createdAt": "2026-08-15T08:05:55.030696Z",
-      "updatedAt": "2026-08-15T08:05:55.030696Z"
+      "updatedAt": "2026-08-15T08:05:55.030696Z",
+      "heroImage": "/images/games/1.svg",
+      "instructionImage": "/images/games/instructions/1.svg"
     },
     {
       "id": 2,
       "name": "Đi tìm báu vật trong nhà",
       "image": "/images/games/2.svg",
       "description": "Mini Scavenger Hunt: mỗi người tìm nhanh một món đồ theo gợi ý rồi khoe với nhóm trong phòng.",
-      "howToPlay": "1. Leader đọc lần lượt 4–5 gợi ý dễ: “một vật màu xanh”, “thứ làm bạn tỉnh táo”, “một món dùng lúc học”.\n2. Mỗi gợi ý: mọi người có 20–30 giây tìm đồ trong phòng / quanh chỗ ngồi.\n3. Lần lượt đưa đồ ra giữa nhóm và nói đúng một câu.\n4. Không ai bị loại. Ai chưa tìm thấy có thể mô tả món đồ.\n5. Leader chọn 1 món “đáng nhớ nhất” để cả nhóm vỗ tay, không chấm điểm.",
+      "howToPlay": [
+        "Leader đọc lần lượt 4–5 gợi ý dễ: “một vật màu xanh”, “thứ làm bạn tỉnh táo”, “một món dùng lúc học”.",
+        "Mỗi gợi ý: mọi người có 20–30 giây tìm đồ trong phòng / quanh chỗ ngồi.",
+        "Lần lượt đưa đồ ra giữa nhóm và nói đúng một câu.",
+        "Không ai bị loại. Ai chưa tìm thấy có thể mô tả món đồ.",
+        "Leader chọn 1 món “đáng nhớ nhất” để cả nhóm vỗ tay, không chấm điểm."
+      ],
       "durationMin": 18,
       "durationMax": 18,
       "minPlayers": 5,
@@ -58,14 +71,21 @@
         "Tạo sự thoải mái"
       ],
       "createdAt": "2026-08-15T08:05:55.055276Z",
-      "updatedAt": "2026-08-15T08:05:55.055276Z"
+      "updatedAt": "2026-08-15T08:05:55.055276Z",
+      "heroImage": "/images/games/2.svg",
+      "instructionImage": "/images/games/instructions/2.svg"
     },
     {
       "id": 3,
       "name": "Đứng lên - Ngồi xuống theo lệnh ngược",
       "image": "/images/games/3.svg",
       "description": "Leader ra lệnh, cả nhóm làm NGƯỢC: nghe “đứng” thì ngồi, nghe “ngồi” thì đứng.",
-      "howToPlay": "1. Cả nhóm đứng tại chỗ trong lớp, chừa khoảng để ngồi xuống an toàn.\n2. Leader nói chậm: “Đứng lên” hoặc “Ngồi xuống”. Cả nhóm làm NGƯỢC lệnh.\n3. Sai thì cười và chơi tiếp, không bị loại.\n4. Kết thúc bằng một lệnh thật để cả nhóm ngồi lại.",
+      "howToPlay": [
+        "Cả nhóm đứng tại chỗ trong lớp, chừa khoảng để ngồi xuống an toàn.",
+        "Leader nói chậm: “Đứng lên” hoặc “Ngồi xuống”. Cả nhóm làm NGƯỢC lệnh.",
+        "Sai thì cười và chơi tiếp, không bị loại.",
+        "Kết thúc bằng một lệnh thật để cả nhóm ngồi lại."
+      ],
       "durationMin": 5,
       "durationMax": 5,
       "minPlayers": 10,
@@ -88,14 +108,21 @@
         "Tạo tiếng cười"
       ],
       "createdAt": "2026-08-15T08:05:55.063675Z",
-      "updatedAt": "2026-08-15T08:05:55.063675Z"
+      "updatedAt": "2026-08-15T08:05:55.063675Z",
+      "heroImage": "/images/games/3.svg",
+      "instructionImage": "/images/games/instructions/3.svg"
     },
     {
       "id": 4,
       "name": "Câu chuyện 3 chương",
       "image": "/images/games/4.svg",
       "description": "Ba người nối một câu chuyện rất ngắn: mở đầu, tình huống, kết. Người còn lại thêm chi tiết nhỏ.",
-      "howToPlay": "1. Nhóm ngồi thành vòng nhỏ. Leader đưa chủ đề nhẹ: “một buổi học bị mất điện”.\n2. Người 1 nói 2–3 câu mở đầu. Người 2 thêm tình huống. Người 3 kết thúc.\n3. Người còn lại thêm đúng 1 câu chi tiết nhỏ.\n4. Không cần hay. Chỉ cần nối được mạch.",
+      "howToPlay": [
+        "Nhóm ngồi thành vòng nhỏ. Leader đưa chủ đề nhẹ: “một buổi học bị mất điện”.",
+        "Người 1 nói 2–3 câu mở đầu. Người 2 thêm tình huống. Người 3 kết thúc.",
+        "Người còn lại thêm đúng 1 câu chi tiết nhỏ.",
+        "Không cần hay. Chỉ cần nối được mạch."
+      ],
       "durationMin": 10,
       "durationMax": 10,
       "minPlayers": 4,
@@ -119,14 +146,21 @@
         "Tạo tiếng cười"
       ],
       "createdAt": "2026-08-15T08:05:55.080356Z",
-      "updatedAt": "2026-08-15T08:05:55.080356Z"
+      "updatedAt": "2026-08-15T08:05:55.080356Z",
+      "heroImage": "/images/games/4.svg",
+      "instructionImage": "/images/games/instructions/4.svg"
     },
     {
       "id": 5,
       "name": "Đặt biệt danh vui",
       "image": "/images/games/5.svg",
       "description": "Mỗi người chọn một biệt danh dễ gọi trong buổi họp mặt, giải thích bằng một câu.",
-      "howToPlay": "1. Leader nêu ví dụ trước: “Hôm nay mình là Trà Đá, vì mình tỉnh táo chậm”.\n2. Lần lượt mỗi người nói: tên thật + biệt danh + lý do một câu.\n3. Biệt danh phải dễ nói, không đụng chạm ngoại hình / điểm yếu.\n4. Leader ghi nhanh lên bảng để mọi người nhớ.",
+      "howToPlay": [
+        "Leader nêu ví dụ trước: “Hôm nay mình là Trà Đá, vì mình tỉnh táo chậm”.",
+        "Lần lượt mỗi người nói: tên thật + biệt danh + lý do một câu.",
+        "Biệt danh phải dễ nói, không đụng chạm ngoại hình / điểm yếu.",
+        "Leader ghi nhanh lên bảng để mọi người nhớ."
+      ],
       "durationMin": 7,
       "durationMax": 7,
       "minPlayers": 5,
@@ -150,14 +184,21 @@
         "Tạo tiếng cười"
       ],
       "createdAt": "2026-08-15T08:05:55.087923Z",
-      "updatedAt": "2026-08-15T08:05:55.087923Z"
+      "updatedAt": "2026-08-15T08:05:55.087923Z",
+      "heroImage": "/images/games/5.svg",
+      "instructionImage": "/images/games/instructions/5.svg"
     },
     {
       "id": 6,
       "name": "Tìm điểm chung nhanh",
       "image": "/images/games/6.svg",
       "description": "Cả nhóm tìm càng nhiều điểm chung càng tốt trong thời gian ngắn, không cần sâu.",
-      "howToPlay": "1. Leader đặt câu dễ: “Ai từng thức khuya làm bài giơ tay”.\n2. Những người giơ tay nói thêm 1 chi tiết rất ngắn.\n3. Lặp 4–5 câu: đồ uống, môn học, thú cưng, ca sĩ nghe dạo này.\n4. Leader ghi 3 điểm chung lên bảng rồi cả nhóm bắt tay.",
+      "howToPlay": [
+        "Leader đặt câu dễ: “Ai từng thức khuya làm bài giơ tay”.",
+        "Những người giơ tay nói thêm 1 chi tiết rất ngắn.",
+        "Lặp 4–5 câu: đồ uống, môn học, thú cưng, ca sĩ nghe dạo này.",
+        "Leader ghi 3 điểm chung lên bảng rồi cả nhóm bắt tay."
+      ],
       "durationMin": 8,
       "durationMax": 8,
       "minPlayers": 5,
@@ -181,14 +222,21 @@
         "Tạo sự thoải mái"
       ],
       "createdAt": "2026-08-15T08:05:55.097145Z",
-      "updatedAt": "2026-08-15T08:05:55.097145Z"
+      "updatedAt": "2026-08-15T08:05:55.097145Z",
+      "heroImage": "/images/games/6.svg",
+      "instructionImage": "/images/games/instructions/6.svg"
     },
     {
       "id": 7,
       "name": "Đoán chủ nhân",
       "image": "/images/games/7.svg",
       "description": "Mỗi người chọn một món đồ. Cả nhóm đoán món đó của ai, rồi chủ nhân nói một câu.",
-      "howToPlay": "1. Mỗi người chọn một món gần tầm tay, đặt úp hoặc giấu tên.\n2. Lần lượt giơ đồ lên, chưa nói tên chủ nhân.\n3. Cả nhóm đoán chủ nhân. Chủ nhân xác nhận và nói 1 câu về món đồ.\n4. Không cần đoán đúng hết.",
+      "howToPlay": [
+        "Mỗi người chọn một món gần tầm tay, đặt úp hoặc giấu tên.",
+        "Lần lượt giơ đồ lên, chưa nói tên chủ nhân.",
+        "Cả nhóm đoán chủ nhân. Chủ nhân xác nhận và nói 1 câu về món đồ.",
+        "Không cần đoán đúng hết."
+      ],
       "durationMin": 10,
       "durationMax": 10,
       "minPlayers": 5,
@@ -211,14 +259,21 @@
         "Tạo tiếng cười"
       ],
       "createdAt": "2026-08-15T08:05:55.113601Z",
-      "updatedAt": "2026-08-15T08:05:55.113601Z"
+      "updatedAt": "2026-08-15T08:05:55.113601Z",
+      "heroImage": "/images/games/7.svg",
+      "instructionImage": "/images/games/instructions/7.svg"
     },
     {
       "id": 8,
       "name": "Bingo làm quen",
       "image": "/images/games/8.svg",
       "description": "Mỗi ô bingo là một câu dễ. Tìm người trong lớp khớp và đánh dấu.",
-      "howToPlay": "1. Leader phát bảng bingo 3x3 hoặc 4x4 đã in sẵn.\n2. Mỗi ô là một đặc điểm nhẹ: “hay nghe podcast”, “nấu được một món”, “thích mèo”.\n3. Đi quanh lớp, hỏi nhau. Ai khớp ký tên vào ô và kể đúng 1 câu.\n4. Ai có 1 hàng thì hô “Bingo” — cả nhóm vỗ tay, không tặng phạt.",
+      "howToPlay": [
+        "Leader phát bảng bingo 3x3 hoặc 4x4 đã in sẵn.",
+        "Mỗi ô là một đặc điểm nhẹ: “hay nghe podcast”, “nấu được một món”, “thích mèo”.",
+        "Đi quanh lớp, hỏi nhau. Ai khớp ký tên vào ô và kể đúng 1 câu.",
+        "Ai có 1 hàng thì hô “Bingo” — cả nhóm vỗ tay, không tặng phạt."
+      ],
       "durationMin": 15,
       "durationMax": 15,
       "minPlayers": 12,
@@ -242,14 +297,21 @@
         "Tăng tương tác"
       ],
       "createdAt": "2026-08-15T08:05:55.122018Z",
-      "updatedAt": "2026-08-15T08:05:55.122018Z"
+      "updatedAt": "2026-08-15T08:05:55.122018Z",
+      "heroImage": "/images/games/8.svg",
+      "instructionImage": "/images/games/instructions/8.svg"
     },
     {
       "id": 9,
       "name": "Từ nối từ",
       "image": "/images/games/9.svg",
       "description": "Người trước nói một từ, người sau nói từ liên quan. Giữ nhịp chậm, không loại.",
-      "howToPlay": "1. Hai người ngồi đối diện. Leader (hoặc một người) mở từ: “Nhóm”.\n2. Người kia nói một từ liên quan: “họp”, “bài tập”, “lớp”…\n3. Đi vài vòng. Nếu kẹt, được hỏi gợi ý: “nghĩ về đồ ăn / môn học”.\n4. Kết bằng từ cuối cùng nói đồng thanh.",
+      "howToPlay": [
+        "Hai người ngồi đối diện. Leader (hoặc một người) mở từ: “Nhóm”.",
+        "Người kia nói một từ liên quan: “họp”, “bài tập”, “lớp”…",
+        "Đi vài vòng. Nếu kẹt, được hỏi gợi ý: “nghĩ về đồ ăn / môn học”.",
+        "Kết bằng từ cuối cùng nói đồng thanh."
+      ],
       "durationMin": 6,
       "durationMax": 6,
       "minPlayers": 2,
@@ -272,14 +334,21 @@
         "Tăng tương tác"
       ],
       "createdAt": "2026-08-15T08:05:55.130234Z",
-      "updatedAt": "2026-08-15T08:05:55.130234Z"
+      "updatedAt": "2026-08-15T08:05:55.130234Z",
+      "heroImage": "/images/games/9.svg",
+      "instructionImage": "/images/games/instructions/9.svg"
     },
     {
       "id": 10,
       "name": "Nhìn hình đoán chữ",
       "image": "/images/games/10.svg",
       "description": "Leader chiếu hoặc giơ hình; nhóm đoán từ/cụm từ. Ưu tiên hình vui, không đánh đố.",
-      "howToPlay": "1. Leader chuẩn bị 6–8 hình in sẵn hoặc viết trên bảng.\n2. Giơ từng hình 20–30 giây.\n3. Mọi người đoán nói to, không giành lời.\n4. Leader chốt đáp án rồi sang hình tiếp. Dừng khi hết giờ.",
+      "howToPlay": [
+        "Leader chuẩn bị 6–8 hình in sẵn hoặc viết trên bảng.",
+        "Giơ từng hình 20–30 giây.",
+        "Mọi người đoán nói to, không giành lời.",
+        "Leader chốt đáp án rồi sang hình tiếp. Dừng khi hết giờ."
+      ],
       "durationMin": 10,
       "durationMax": 10,
       "minPlayers": 5,
@@ -302,14 +371,21 @@
         "Tạo tiếng cười"
       ],
       "createdAt": "2026-08-15T08:05:55.146283Z",
-      "updatedAt": "2026-08-15T08:05:55.146283Z"
+      "updatedAt": "2026-08-15T08:05:55.146283Z",
+      "heroImage": "/images/games/10.svg",
+      "instructionImage": "/images/games/instructions/10.svg"
     },
     {
       "id": 11,
       "name": "Giới thiệu bằng 3 từ",
       "image": "/images/games/11.svg",
       "description": "Mỗi người mô tả mình tuần này bằng đúng 3 từ, rồi giải thích 10 giây nếu muốn.",
-      "howToPlay": "1. Leader làm mẫu: “Deadline – trà đá – mưa”.\n2. Mỗi người nói 3 từ. Có thể viết ra giấy rồi đọc.\n3. Không bắt kể dài. Ai ngại chỉ cần 3 từ, không giải thích.\n4. Leader gom điểm chung của cả nhóm.",
+      "howToPlay": [
+        "Leader làm mẫu: “Deadline – trà đá – mưa”.",
+        "Mỗi người nói 3 từ. Có thể viết ra giấy rồi đọc.",
+        "Không bắt kể dài. Ai ngại chỉ cần 3 từ, không giải thích.",
+        "Leader gom điểm chung của cả nhóm."
+      ],
       "durationMin": 5,
       "durationMax": 5,
       "minPlayers": 5,
@@ -333,14 +409,21 @@
         "Tạo sự thoải mái"
       ],
       "createdAt": "2026-08-15T08:05:55.155292Z",
-      "updatedAt": "2026-08-15T08:05:55.155292Z"
+      "updatedAt": "2026-08-15T08:05:55.155292Z",
+      "heroImage": "/images/games/11.svg",
+      "instructionImage": "/images/games/instructions/11.svg"
     },
     {
       "id": 12,
       "name": "This or That",
       "image": "/images/games/12.svg",
       "description": "Chọn nhanh một trong hai thứ dễ: trà/cà phê, sáng/tối, mèo/chó… Không có đáp án đúng.",
-      "howToPlay": "1. Leader đọc cặp: “Trà sữa hay nước lọc?”\n2. Mọi người giơ 1 ngón / 2 ngón, hoặc bước sang trái/phải trong lớp.\n3. Leader hỏi 1–2 người vì sao — trả lời một câu.\n4. Lặp 5–6 cặp đời thường, không chính trị, không ngoại hình.",
+      "howToPlay": [
+        "Leader đọc cặp: “Trà sữa hay nước lọc?”",
+        "Mọi người giơ 1 ngón / 2 ngón, hoặc bước sang trái/phải trong lớp.",
+        "Leader hỏi 1–2 người vì sao — trả lời một câu.",
+        "Lặp 5–6 cặp đời thường, không chính trị, không ngoại hình."
+      ],
       "durationMin": 7,
       "durationMax": 7,
       "minPlayers": 8,
@@ -364,14 +447,20 @@
         "Tạo tiếng cười"
       ],
       "createdAt": "2026-08-15T08:05:55.163669Z",
-      "updatedAt": "2026-08-15T08:05:55.163669Z"
+      "updatedAt": "2026-08-15T08:05:55.163669Z",
+      "heroImage": "/images/games/12.svg",
+      "instructionImage": "/images/games/instructions/12.svg"
     },
     {
       "id": 13,
       "name": "Emoji tâm trạng",
       "image": "/images/games/13.svg",
       "description": "Mỗi người chọn 1–2 biểu cảm hoặc sticker giấy để mô tả cảm xúc lúc bắt đầu buổi họp mặt.",
-      "howToPlay": "1. Leader phát giấy nhỏ / sticky note. Mọi người vẽ một mặt cười hoặc viết 1 từ cảm xúc.\n2. Lần lượt giơ giấy lên. Muốn nói thêm một câu thì nói, không bắt buộc.\n3. Leader gom cảm xúc nhóm rồi chuyển sang việc chính, không phán xét.",
+      "howToPlay": [
+        "Leader phát giấy nhỏ / sticky note. Mọi người vẽ một mặt cười hoặc viết 1 từ cảm xúc.",
+        "Lần lượt giơ giấy lên. Muốn nói thêm một câu thì nói, không bắt buộc.",
+        "Leader gom cảm xúc nhóm rồi chuyển sang việc chính, không phán xét."
+      ],
       "durationMin": 4,
       "durationMax": 4,
       "minPlayers": 5,
@@ -394,14 +483,20 @@
         "Tạo sự thoải mái"
       ],
       "createdAt": "2026-08-15T08:05:55.180201Z",
-      "updatedAt": "2026-08-15T08:05:55.180201Z"
+      "updatedAt": "2026-08-15T08:05:55.180201Z",
+      "heroImage": "/images/games/13.svg",
+      "instructionImage": "/images/games/instructions/13.svg"
     },
     {
       "id": 14,
       "name": "Show and Tell 30 giây",
       "image": "/images/games/14.svg",
       "description": "Khoe một vật trong tầm tay và nói tối đa 30 giây vì sao hôm nay để nó gần mình.",
-      "howToPlay": "1. Cho 1 phút tìm vật (ly, tai nghe, vở, móc khóa).\n2. Mỗi người: giơ vật + nói tối đa 30 giây.\n3. Nhóm vỗ tay nhẹ. Không so sánh vật “cool” hơn.",
+      "howToPlay": [
+        "Cho 1 phút tìm vật (ly, tai nghe, vở, móc khóa).",
+        "Mỗi người: giơ vật + nói tối đa 30 giây.",
+        "Nhóm vỗ tay nhẹ. Không so sánh vật “cool” hơn."
+      ],
       "durationMin": 8,
       "durationMax": 8,
       "minPlayers": 5,
@@ -424,14 +519,21 @@
         "Tạo sự thoải mái"
       ],
       "createdAt": "2026-08-15T08:05:55.188726Z",
-      "updatedAt": "2026-08-15T08:05:55.188726Z"
+      "updatedAt": "2026-08-15T08:05:55.188726Z",
+      "heroImage": "/images/games/14.svg",
+      "instructionImage": "/images/games/instructions/14.svg"
     },
     {
       "id": 15,
       "name": "Would You Rather nhẹ",
       "image": "/images/games/15.svg",
       "description": "Chọn một trong hai tình huống vô hại, giải thích đúng một câu. Chơi khi đang đi hoặc đứng trên campus.",
-      "howToPlay": "1. Leader đọc: “Thức khuya làm bài hay dậy sớm làm bài?”\n2. Giơ tay hoặc bước sang hai phía.\n3. 1–2 người giải thích một câu.\n4. Lặp 4–5 câu. Câu cuối liên quan việc nhóm sắp làm.",
+      "howToPlay": [
+        "Leader đọc: “Thức khuya làm bài hay dậy sớm làm bài?”",
+        "Giơ tay hoặc bước sang hai phía.",
+        "1–2 người giải thích một câu.",
+        "Lặp 4–5 câu. Câu cuối liên quan việc nhóm sắp làm."
+      ],
       "durationMin": 7,
       "durationMax": 7,
       "minPlayers": 5,
@@ -454,14 +556,21 @@
         "Tạo tiếng cười"
       ],
       "createdAt": "2026-08-15T08:05:55.197075Z",
-      "updatedAt": "2026-08-15T08:05:55.197075Z"
+      "updatedAt": "2026-08-15T08:05:55.197075Z",
+      "heroImage": "/images/games/15.svg",
+      "instructionImage": "/images/games/instructions/15.svg"
     },
     {
       "id": 16,
       "name": "Câu chuyện nối câu",
       "image": "/images/games/16.svg",
       "description": "Mỗi người thêm đúng một câu vào câu chuyện chung, đi một vòng.",
-      "howToPlay": "1. Leader mở: “Sáng nay một nhóm sinh viên vào lớp và thấy…”\n2. Mỗi người thêm 1 câu. Đi hết vòng, có thể vòng 2 nếu còn giờ.\n3. Ai kẹt được gợi ý: “thêm một chi tiết đồ vật / thời tiết”.\n4. Người cuối kết thúc có hậu.",
+      "howToPlay": [
+        "Leader mở: “Sáng nay một nhóm sinh viên vào lớp và thấy…”",
+        "Mỗi người thêm 1 câu. Đi hết vòng, có thể vòng 2 nếu còn giờ.",
+        "Ai kẹt được gợi ý: “thêm một chi tiết đồ vật / thời tiết”.",
+        "Người cuối kết thúc có hậu."
+      ],
       "durationMin": 8,
       "durationMax": 8,
       "minPlayers": 5,
@@ -485,14 +594,21 @@
         "Tạo tiếng cười"
       ],
       "createdAt": "2026-08-15T08:05:55.205444Z",
-      "updatedAt": "2026-08-15T08:05:55.205444Z"
+      "updatedAt": "2026-08-15T08:05:55.205444Z",
+      "heroImage": "/images/games/16.svg",
+      "instructionImage": "/images/games/instructions/16.svg"
     },
     {
       "id": 17,
       "name": "High-five ảo theo chủ đề",
       "image": "/images/games/17.svg",
       "description": "Leader nêu chủ đề, ai khớp thì high-five người bên cạnh. Rất nhanh, rất ít nói.",
-      "howToPlay": "1. Cả nhóm đứng thành vòng trong lớp.\n2. “High-five nếu hôm nay uống cà phê.” Ai khớp high-five người cạnh mình.\n3. Đổi chủ đề: ngủ muộn, thích mèo, đang mang balo.\n4. Làm 6–8 chủ đề. Chủ đề cuối: “High-five nếu sẵn sàng vào việc”.",
+      "howToPlay": [
+        "Cả nhóm đứng thành vòng trong lớp.",
+        "“High-five nếu hôm nay uống cà phê.” Ai khớp high-five người cạnh mình.",
+        "Đổi chủ đề: ngủ muộn, thích mèo, đang mang balo.",
+        "Làm 6–8 chủ đề. Chủ đề cuối: “High-five nếu sẵn sàng vào việc”."
+      ],
       "durationMin": 4,
       "durationMax": 4,
       "minPlayers": 10,
@@ -515,14 +631,21 @@
         "Tạo sự thoải mái"
       ],
       "createdAt": "2026-08-15T08:05:55.213632Z",
-      "updatedAt": "2026-08-15T08:05:55.213632Z"
+      "updatedAt": "2026-08-15T08:05:55.213632Z",
+      "heroImage": "/images/games/17.svg",
+      "instructionImage": "/images/games/instructions/17.svg"
     },
     {
       "id": 18,
       "name": "Câu hỏi 3 giây",
       "image": "/images/games/18.svg",
       "description": "Leader hỏi câu siêu dễ, mỗi người trả lời đúng một từ trong khoảng 3–5 giây.",
-      "howToPlay": "1. Câu mẫu: “Đồ uống lúc này?”, “Môn đang tới hạn?”.\n2. Đi vòng quanh lớp. Không giải thích.\n3. 2–3 vòng câu khác nhau.\n4. Ai chưa nghĩ ra nói “nước lọc” / “chưa nghĩ” — vẫn tính là đã tham gia.",
+      "howToPlay": [
+        "Câu mẫu: “Đồ uống lúc này?”, “Môn đang tới hạn?”.",
+        "Đi vòng quanh lớp. Không giải thích.",
+        "2–3 vòng câu khác nhau.",
+        "Ai chưa nghĩ ra nói “nước lọc” / “chưa nghĩ” — vẫn tính là đã tham gia."
+      ],
       "durationMin": 5,
       "durationMax": 5,
       "minPlayers": 5,
@@ -545,14 +668,21 @@
         "Tăng tương tác"
       ],
       "createdAt": "2026-08-15T08:05:55.222147Z",
-      "updatedAt": "2026-08-15T08:05:55.222147Z"
+      "updatedAt": "2026-08-15T08:05:55.222147Z",
+      "heroImage": "/images/games/18.svg",
+      "instructionImage": "/images/games/instructions/18.svg"
     },
     {
       "id": 19,
       "name": "Con vật đại diện",
       "image": "/images/games/19.svg",
       "description": "Chọn một con vật cho “version mình lúc họp nhóm” và nói lý do một câu. Chơi ngoài trời nếu tiện.",
-      "howToPlay": "1. Leader mẫu: “Mình là mèo hôm nay, vì muốn ngồi im nghe trước”.\n2. Mỗi người chọn con vật. Không cần độc lạ.\n3. Nói 1 câu lý do. Leader ghi nhanh lên giấy.\n4. Không bắt chước tiếng kêu nếu ai ngại.",
+      "howToPlay": [
+        "Leader mẫu: “Mình là mèo hôm nay, vì muốn ngồi im nghe trước”.",
+        "Mỗi người chọn con vật. Không cần độc lạ.",
+        "Nói 1 câu lý do. Leader ghi nhanh lên giấy.",
+        "Không bắt chước tiếng kêu nếu ai ngại."
+      ],
       "durationMin": 6,
       "durationMax": 6,
       "minPlayers": 5,
@@ -575,14 +705,21 @@
         "Tạo tiếng cười"
       ],
       "createdAt": "2026-08-15T08:05:55.230596Z",
-      "updatedAt": "2026-08-15T08:05:55.230596Z"
+      "updatedAt": "2026-08-15T08:05:55.230596Z",
+      "heroImage": "/images/games/19.svg",
+      "instructionImage": "/images/games/instructions/19.svg"
     },
     {
       "id": 20,
       "name": "Tìm người cùng vibe",
       "image": "/images/games/20.svg",
       "description": "Leader nêu 4 vibe; mỗi người chọn 1. Những người cùng vibe đứng lại gần nhau trên campus / hành lang.",
-      "howToPlay": "1. Bốn vibe: “muốn nghe”, “muốn nói”, “muốn pha trò”, “muốn vào việc luôn”.\n2. Mỗi người chọn 1 (giơ số ngón tay).\n3. Cùng số thì bước lại gần và chào nhau. Không có vibe nào “đúng hơn”.\n4. Leader điều chỉnh cách họp mặt cho khớp năng lượng nhóm.",
+      "howToPlay": [
+        "Bốn vibe: “muốn nghe”, “muốn nói”, “muốn pha trò”, “muốn vào việc luôn”.",
+        "Mỗi người chọn 1 (giơ số ngón tay).",
+        "Cùng số thì bước lại gần và chào nhau. Không có vibe nào “đúng hơn”.",
+        "Leader điều chỉnh cách họp mặt cho khớp năng lượng nhóm."
+      ],
       "durationMin": 5,
       "durationMax": 5,
       "minPlayers": 8,
@@ -605,7 +742,9 @@
         "Tạo sự thoải mái"
       ],
       "createdAt": "2026-08-15T08:05:55.238670Z",
-      "updatedAt": "2026-08-15T08:05:55.238670Z"
+      "updatedAt": "2026-08-15T08:05:55.238670Z",
+      "heroImage": "/images/games/20.svg",
+      "instructionImage": "/images/games/instructions/20.svg"
     }
   ],
   "filters": {

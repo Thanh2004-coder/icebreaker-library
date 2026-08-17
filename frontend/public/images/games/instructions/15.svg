@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+  <rect width="640" height="360" fill="#E8F0EE"/>
+  <text x="320" y="48" text-anchor="middle" fill="#1B4D4A" font-size="22" font-weight="700" font-family="Segoe UI, sans-serif">Cách chơi</text>
+  <rect x="80" y="90" width="210" height="140" rx="18" fill="#1B4D4A"/><rect x="350" y="90" width="210" height="140" rx="18" fill="#E07A5F"/><text x="185" y="175" text-anchor="middle" fill="#FFFDF8" font-size="40" font-weight="800" font-family="Segoe UI, sans-serif">A</text><text x="455" y="175" text-anchor="middle" fill="#FFFDF8" font-size="40" font-weight="800" font-family="Segoe UI, sans-serif">B</text>
+  <text x="320" y="318" text-anchor="middle" fill="#1B4D4A" font-size="20" font-weight="700" font-family="Segoe UI, sans-serif">Chọn A hoặc B</text>
+</svg>

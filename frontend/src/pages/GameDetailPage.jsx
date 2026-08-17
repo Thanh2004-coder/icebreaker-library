@@ -12,6 +12,15 @@ import {
   refreshAfterReview,
 } from "../cache/gameStore.js";
 import { formatDuration, formatPlayers, formatRating } from "../api.js";
+import {
+  FALLBACK_GAME_IMAGE,
+  FALLBACK_INSTRUCTION_IMAGE,
+  getGameImage,
+  getGameInstructionImage,
+  getHowToPlaySteps,
+  getStaticGameById,
+  onCatalogImageError,
+} from "../data/staticCatalog.js";
 
 export default function GameDetailPage() {
   const { id } = useParams();
@@ -81,7 +90,23 @@ export default function GameDetailPage() {
   };
 
   const onRetry = () => setLoadToken((n) => n + 1);
-  const showShell = Boolean(game);
+  const catalogGame = getStaticGameById(id);
+  // Render from catalogue image fields even if live/cache payload omits them.
+  const view = game
+    ? {
+        ...catalogGame,
+        ...game,
+        heroImage: catalogGame?.heroImage || game.heroImage,
+        instructionImage: catalogGame?.instructionImage || game.instructionImage,
+        howToPlay: catalogGame?.howToPlay ?? game.howToPlay,
+        preparation: catalogGame?.preparation ?? game.preparation,
+        rules: catalogGame?.rules ?? game.rules,
+      }
+    : null;
+  const showShell = Boolean(view);
+  const howToPlaySteps = showShell ? getHowToPlaySteps(view) : [];
+  const heroSrc = view?.heroImage || getGameImage(view);
+  const instructionSrc = getGameInstructionImage(view);
 
   return (
     <div className="page">
@@ -90,6 +115,18 @@ export default function GameDetailPage() {
         <Link to="/" className="back">
           ← Về danh sách
         </Link>
+
+        {showShell ? (
+          <img
+            key={`hero-${view.id}`}
+            className="detail-hero"
+            src={heroSrc}
+            alt={view.name}
+            width="640"
+            height="360"
+            onError={onCatalogImageError(FALLBACK_GAME_IMAGE)}
+          />
+        ) : null}
 
         <SoftStatusBanner show={Boolean(showShell && !reviewsLive)} />
 
@@ -115,37 +152,37 @@ export default function GameDetailPage() {
           <article className="detail">
             <header>
               <p className="eyebrow">Chi tiết trò chơi</p>
-              <h1>{game.name}</h1>
-              <p className="card-desc">{game.description}</p>
+              <h1>{view.name}</h1>
+              <p className="card-desc">{view.description}</p>
             </header>
 
             <ul className="meta large">
               <li>
-                <strong>Số người:</strong> {formatPlayers(game.minPlayers, game.maxPlayers)}
+                <strong>Số người:</strong> {formatPlayers(view.minPlayers, view.maxPlayers)}
               </li>
               <li>
-                <strong>Thời gian:</strong> {formatDuration(game.durationMin, game.durationMax)}
+                <strong>Thời gian:</strong> {formatDuration(view.durationMin, view.durationMax)}
               </li>
               <li>
                 <strong>Chuẩn bị:</strong>{" "}
-                {game.preparationTime ? `${game.preparationTime} phút` : "Không cần"}
+                {view.preparationTime ? `${view.preparationTime} phút` : "Không cần"}
               </li>
             </ul>
 
             <p>
-              <strong>Bối cảnh:</strong> {game.context}
+              <strong>Bối cảnh:</strong> {view.context}
             </p>
             <p>
-              <strong>Mục đích:</strong> {game.purpose}
+              <strong>Mục đích:</strong> {view.purpose}
             </p>
 
             <div className="tag-row">
-              {(game.contexts || []).map((item) => (
+              {(view.contexts || []).map((item) => (
                 <span key={item} className="tag">
                   📍 {item}
                 </span>
               ))}
-              {(game.purposes || []).map((item) => (
+              {(view.purposes || []).map((item) => (
                 <span key={item} className="tag purpose">
                   🎯 {item}
                 </span>
@@ -154,27 +191,44 @@ export default function GameDetailPage() {
 
             <section>
               <h2>Cách chơi</h2>
-              <div className="prose">{game.howToPlay}</div>
+              <img
+                key={`instruction-${view.id}`}
+                className="detail-instruction"
+                src={instructionSrc}
+                alt={`Cách chơi ${view.name}`}
+                width="640"
+                height="360"
+                onError={onCatalogImageError(FALLBACK_INSTRUCTION_IMAGE)}
+              />
+              {howToPlaySteps.length ? (
+                <ol className="how-to-steps">
+                  {howToPlaySteps.map((step) => (
+                    <li key={step}>{step}</li>
+                  ))}
+                </ol>
+              ) : null}
             </section>
 
             <section>
               <h2>Chuẩn bị</h2>
-              <p>{game.preparation}</p>
+              <p>{Array.isArray(view.preparation) ? view.preparation.join("\n") : view.preparation}</p>
             </section>
 
             <section>
               <h2>Quy định</h2>
-              <div className="prose">{game.rules}</div>
+              <div className="prose">
+                {Array.isArray(view.rules) ? view.rules.join("\n") : view.rules}
+              </div>
             </section>
 
             <section>
               <h2>Đánh giá</h2>
               <div className="rating-row">
-                {game.reviewCount ? <StarRating value={Math.round(game.averageRating || 0)} readOnly /> : null}
+                {view.reviewCount ? <StarRating value={Math.round(view.averageRating || 0)} readOnly /> : null}
                 <strong>
-                  {game.reviewCount ? `${Number(game.averageRating).toFixed(1)}/5` : "Chưa có đánh giá"}
+                  {view.reviewCount ? `${Number(view.averageRating).toFixed(1)}/5` : "Chưa có đánh giá"}
                 </strong>
-                <span>{formatRating(game.averageRating, game.reviewCount)}</span>
+                <span>{formatRating(view.averageRating, view.reviewCount)}</span>
               </div>
             </section>
 

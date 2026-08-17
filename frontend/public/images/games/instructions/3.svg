@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+  <rect width="640" height="360" fill="#E8F0EE"/>
+  <text x="320" y="48" text-anchor="middle" fill="#1B4D4A" font-size="22" font-weight="700" font-family="Segoe UI, sans-serif">Cách chơi</text>
+  <rect x="150" y="90" width="140" height="90" rx="16" fill="#2F6F6A"/><rect x="350" y="150" width="140" height="90" rx="16" fill="#E07A5F"/>
+  <text x="320" y="318" text-anchor="middle" fill="#1B4D4A" font-size="20" font-weight="700" font-family="Segoe UI, sans-serif">Đứng lên / ngồi xuống</text>
+</svg>

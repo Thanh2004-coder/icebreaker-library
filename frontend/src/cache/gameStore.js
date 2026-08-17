@@ -13,11 +13,22 @@ import {
 } from "../api.js";
 import { STATIC_FILTERS, STATIC_GAMES, getStaticGameById } from "../data/staticCatalog.js";
 
-/** Keep catalogue `image` when live API payloads omit it. */
+/** Catalogue is source of truth for game content; live API only supplies ratings. */
 function withCatalogImage(live, key) {
   if (!live) return live;
-  const fromCatalog = getStaticGameById(key)?.image || getCachedSummary(key)?.image;
-  return live.image ? live : { ...live, image: fromCatalog };
+  const catalog = getStaticGameById(key) || getCachedSummary(key) || {};
+  return {
+    ...catalog,
+    ...live,
+    image: catalog.image || live.image,
+    heroImage: catalog.heroImage || live.heroImage,
+    instructionImage: catalog.instructionImage || live.instructionImage,
+    howToPlay: catalog.howToPlay ?? live.howToPlay,
+    preparation: catalog.preparation ?? live.preparation,
+    rules: catalog.rules ?? live.rules,
+    averageRating: live.averageRating ?? catalog.averageRating,
+    reviewCount: live.reviewCount ?? catalog.reviewCount,
+  };
 }
 
 const PAGE_SIZE = 10;
@@ -292,6 +303,8 @@ export function loadGameDetail(id, { force = false } = {}) {
             name: merged.name,
             description: merged.description,
             image: merged.image,
+            heroImage: merged.heroImage,
+            instructionImage: merged.instructionImage,
             durationMin: merged.durationMin,
             durationMax: merged.durationMax,
             minPlayers: merged.minPlayers,
@@ -333,6 +346,8 @@ export function loadGameDetail(id, { force = false } = {}) {
         name: merged.name,
         description: merged.description,
         image: merged.image,
+        heroImage: merged.heroImage,
+        instructionImage: merged.instructionImage,
         durationMin: merged.durationMin,
         durationMax: merged.durationMax,
         minPlayers: merged.minPlayers,

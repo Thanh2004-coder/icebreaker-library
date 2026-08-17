@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+  <rect width="640" height="360" fill="#E8F0EE"/>
+  <text x="320" y="48" text-anchor="middle" fill="#1B4D4A" font-size="22" font-weight="700" font-family="Segoe UI, sans-serif">Cách chơi</text>
+  <circle cx="320" cy="140" r="48" fill="none" stroke="#1B4D4A" stroke-width="12"/><line x1="354" y1="174" x2="420" y2="240" stroke="#1B4D4A" stroke-width="14" stroke-linecap="round"/><rect x="230" y="200" width="90" height="48" rx="10" fill="#E07A5F"/>
+  <text x="320" y="318" text-anchor="middle" fill="#1B4D4A" font-size="20" font-weight="700" font-family="Segoe UI, sans-serif">Tìm rồi khoe đồ</text>
+</svg>
