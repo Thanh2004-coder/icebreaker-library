@@ -1,6 +1,6 @@
 /**
- * Catalog cache (memory + localStorage) + single-flight network loads.
- * Cold start: wake /api/health once, then /api/games once — no spam retries.
+ * Catalog: static 20 games for instant Home/Detail.
+ * Network only for health wake (optional), reviews/ratings, and optional rating soft-refresh.
  */
 
 import {
@@ -11,17 +11,16 @@ import {
   fetchReviews,
   getApiBase,
 } from "../api.js";
+import { STATIC_FILTERS, STATIC_GAMES, getStaticGameById } from "../data/staticCatalog.js";
 
 const PAGE_SIZE = 10;
 const CATALOG_SIZE = 50;
 const LS_GAMES = "warmup.catalog.v1";
 const LS_FILTERS = "warmup.filters.v1";
 
-/** Allow long Render cold start on a single health request (no tight poll loop). */
 const HEALTH_TIMEOUT_MS = 180_000;
 const GAMES_TIMEOUT_MS = 120_000;
 
-/** Built-in filter shell so Home can show players/duration before /api/filters returns. */
 export const DEFAULT_FILTER_CATALOG = {
   players: [
     { value: "2", label: "2 người" },
@@ -46,6 +45,7 @@ let catalogGames = null;
 let filtersPromise = null;
 let filtersCache = null;
 let wakePromise = null;
+let ratingsRefreshPromise = null;
 
 const summaryById = new Map();
 const detailById = new Map();
@@ -66,6 +66,37 @@ function safeParse(raw) {
   }
 }
 
+function persistGames(games) {
+  if (typeof localStorage === "undefined") return;
+  try {
+    localStorage.setItem(LS_GAMES, JSON.stringify(games));
+  } catch {
+    /* ignore */
+  }
+}
+
+function persistFilters(data) {
+  if (typeof localStorage === "undefined") return;
+  try {
+    localStorage.setItem(LS_FILTERS, JSON.stringify(data));
+  } catch {
+    /* ignore */
+  }
+}
+
+/** Seed memory from bundled static catalogue (source of truth for offline Home/Detail). */
+function seedStaticCatalog() {
+  catalogGames = STATIC_GAMES.map((g) => ({ ...g }));
+  catalogGames.forEach((g) => {
+    rememberSummary(g);
+    detailById.set(Number(g.id), { ...g });
+  });
+  filtersCache = mergeFilterCatalog(STATIC_FILTERS);
+}
+
+seedStaticCatalog();
+
+/** Merge previously saved ratings onto static rows if present. */
 export function readPersistedGames() {
   if (typeof localStorage === "undefined") return null;
   const parsed = safeParse(localStorage.getItem(LS_GAMES));
@@ -80,41 +111,31 @@ export function readPersistedFilters() {
   return parsed;
 }
 
-function persistGames(games) {
-  if (typeof localStorage === "undefined") return;
-  try {
-    localStorage.setItem(LS_GAMES, JSON.stringify(games));
-  } catch {
-    /* quota / private mode */
-  }
-}
-
-function persistFilters(data) {
-  if (typeof localStorage === "undefined") return;
-  try {
-    localStorage.setItem(LS_FILTERS, JSON.stringify(data));
-  } catch {
-    /* ignore */
-  }
-}
-
-function hydrateFromPersisted() {
-  if (!catalogGames) {
-    const persisted = readPersistedGames();
-    if (persisted) {
-      catalogGames = persisted;
-      catalogGames.forEach(rememberSummary);
+(function mergePersistedRatings() {
+  const persisted = readPersistedGames();
+  if (!persisted || !catalogGames) return;
+  const byId = new Map(persisted.map((g) => [Number(g.id), g]));
+  catalogGames = catalogGames.map((g) => {
+    const p = byId.get(Number(g.id));
+    if (!p) return g;
+    const next = {
+      ...g,
+      averageRating: p.averageRating ?? g.averageRating,
+      reviewCount: p.reviewCount ?? g.reviewCount,
+    };
+    rememberSummary(next);
+    const detail = detailById.get(Number(g.id));
+    if (detail) {
+      detailById.set(Number(g.id), {
+        ...detail,
+        averageRating: next.averageRating,
+        reviewCount: next.reviewCount,
+      });
     }
-  }
-  if (!filtersCache) {
-    const persisted = readPersistedFilters();
-    if (persisted) filtersCache = persisted;
-  }
-}
+    return next;
+  });
+})();
 
-hydrateFromPersisted();
-
-/** Kick Render as early as this module loads (PROD only). Single-flight. */
 export function wakeBackendEarly() {
   if (!import.meta.env.PROD || !getApiBase()) {
     return Promise.resolve(true);
@@ -138,18 +159,16 @@ export function getCachedSummary(id) {
   const key = Number(id);
   const hit = summaryById.get(key);
   if (hit) return hit;
-  const list = catalogGames || readPersistedGames() || [];
-  const fromList = list.find((g) => Number(g.id) === key);
-  if (fromList) {
-    rememberSummary(fromList);
-    return fromList;
+  const staticHit = getStaticGameById(key);
+  if (staticHit) {
+    rememberSummary(staticHit);
+    return staticHit;
   }
   return null;
 }
 
-/** Best available game payload for detail UI without network. */
 export function getGameFallback(id) {
-  return getCachedDetail(id) || getCachedSummary(id) || null;
+  return getCachedDetail(id) || getCachedSummary(id) || getStaticGameById(id) || null;
 }
 
 export function getCachedDetail(id) {
@@ -161,26 +180,30 @@ export function getCachedReviews(id) {
 }
 
 export function getCachedFilters() {
-  return filtersCache || readPersistedFilters();
+  return filtersCache || mergeFilterCatalog(STATIC_FILTERS);
 }
 
 export function getMemoryCatalog() {
-  return catalogGames || readPersistedGames();
+  return catalogGames || STATIC_GAMES;
+}
+
+export function getStaticCatalog() {
+  return getMemoryCatalog();
 }
 
 export function loadFilterCatalog({ force = false } = {}) {
-  if (force) {
-    filtersPromise = null;
+  // Static filters always available; network refresh is optional.
+  if (!force) {
+    return Promise.resolve(getCachedFilters());
   }
-  if (!force && filtersCache) return Promise.resolve(filtersCache);
   if (filtersPromise) return filtersPromise;
 
   filtersPromise = (async () => {
     await wakeBackendEarly();
     const data = await fetchFilters({ timeoutMs: GAMES_TIMEOUT_MS });
-    filtersCache = data;
-    persistFilters(data);
-    return data;
+    filtersCache = mergeFilterCatalog(data);
+    persistFilters(filtersCache);
+    return filtersCache;
   })().catch((err) => {
     filtersPromise = null;
     throw err;
@@ -190,43 +213,105 @@ export function loadFilterCatalog({ force = false } = {}) {
 }
 
 /**
- * Load full game list once. Uses memory/localStorage for instant UI.
- * Network: wake health → one /api/games. force=true for Retry button.
+ * Optional background rating refresh. Does not block Home first paint.
+ * Catalogue content stays static; only averageRating/reviewCount may update.
  */
-export function loadGameCatalog({ force = false } = {}) {
-  if (force) {
-    catalogPromise = null;
-  }
-  if (!force && catalogGames?.length) {
-    return Promise.resolve(catalogGames);
-  }
-  if (catalogPromise) {
-    return catalogPromise;
-  }
+export function softRefreshCatalogRatings() {
+  if (ratingsRefreshPromise) return ratingsRefreshPromise;
 
-  catalogPromise = (async () => {
+  ratingsRefreshPromise = (async () => {
     await wakeBackendEarly();
     const data = await fetchGames({ page: 0, size: CATALOG_SIZE }, { timeoutMs: GAMES_TIMEOUT_MS });
-    catalogGames = Array.isArray(data?.content) ? data.content : [];
-    catalogGames.forEach(rememberSummary);
+    const rows = Array.isArray(data?.content) ? data.content : [];
+    const ratingById = new Map(rows.map((g) => [Number(g.id), g]));
+    catalogGames = (catalogGames || STATIC_GAMES).map((g) => {
+      const live = ratingById.get(Number(g.id));
+      if (!live) return g;
+      const next = {
+        ...g,
+        averageRating: live.averageRating,
+        reviewCount: live.reviewCount,
+      };
+      rememberSummary(next);
+      const detail = detailById.get(Number(g.id));
+      if (detail) {
+        detailById.set(Number(g.id), {
+          ...detail,
+          averageRating: next.averageRating,
+          reviewCount: next.reviewCount,
+        });
+      }
+      return next;
+    });
     persistGames(catalogGames);
     return catalogGames;
-  })().catch((err) => {
-    catalogPromise = null;
-    throw err;
-  });
+  })()
+    .catch((err) => {
+      ratingsRefreshPromise = null;
+      throw err;
+    })
+    .finally(() => {
+      /* keep resolved promise for dedupe until page reload */
+    });
 
-  return catalogPromise;
+  return ratingsRefreshPromise;
+}
+
+/** @deprecated Prefer getStaticCatalog(); kept for callers that force network. */
+export function loadGameCatalog({ force = false } = {}) {
+  if (!force) {
+    return Promise.resolve(getMemoryCatalog());
+  }
+  return softRefreshCatalogRatings();
 }
 
 export function loadGameDetail(id, { force = false } = {}) {
   const key = Number(id);
-  if (!force && detailById.has(key)) {
-    return Promise.resolve(detailById.get(key));
+  const staticDetail = getStaticGameById(key) || getCachedDetail(key);
+
+  if (!force && staticDetail && staticDetail.howToPlay != null) {
+    detailById.set(key, { ...getCachedDetail(key), ...staticDetail });
+    // Soft-refresh live ratings/detail in background when online.
+    if (!detailInflight.has(key)) {
+      const bg = (async () => {
+        await wakeBackendEarly();
+        return fetchGame(key, { timeoutMs: GAMES_TIMEOUT_MS });
+      })()
+        .then((data) => {
+          detailById.set(key, data);
+          rememberSummary({
+            id: data.id,
+            name: data.name,
+            description: data.description,
+            durationMin: data.durationMin,
+            durationMax: data.durationMax,
+            minPlayers: data.minPlayers,
+            maxPlayers: data.maxPlayers,
+            context: data.context,
+            purpose: data.purpose,
+            preparation: data.preparation,
+            preparationRequired: data.preparationRequired,
+            preparationTime: data.preparationTime,
+            averageRating: data.averageRating,
+            reviewCount: data.reviewCount,
+            contexts: data.contexts,
+            purposes: data.purposes,
+          });
+          return data;
+        })
+        .catch(() => staticDetail)
+        .finally(() => {
+          detailInflight.delete(key);
+        });
+      detailInflight.set(key, bg);
+    }
+    return Promise.resolve(detailById.get(key) || staticDetail);
   }
+
   if (!force && detailInflight.has(key)) {
     return detailInflight.get(key);
   }
+
   const req = (async () => {
     await wakeBackendEarly();
     return fetchGame(key, { timeoutMs: GAMES_TIMEOUT_MS });
@@ -252,6 +337,11 @@ export function loadGameDetail(id, { force = false } = {}) {
         purposes: data.purposes,
       });
       return data;
+    })
+    .catch((err) => {
+      const fallback = getGameFallback(key);
+      if (fallback) return fallback;
+      throw err;
     })
     .finally(() => {
       detailInflight.delete(key);
@@ -311,11 +401,19 @@ export function pageSize() {
 }
 
 export function mergeFilterCatalog(apiFilters) {
-  if (!apiFilters) return { ...DEFAULT_FILTER_CATALOG };
+  const base = STATIC_FILTERS || DEFAULT_FILTER_CATALOG;
+  if (!apiFilters) {
+    return {
+      players: base.players?.length ? base.players : DEFAULT_FILTER_CATALOG.players,
+      contexts: base.contexts || [],
+      purposes: base.purposes || [],
+      durations: base.durations?.length ? base.durations : DEFAULT_FILTER_CATALOG.durations,
+    };
+  }
   return {
-    players: apiFilters.players?.length ? apiFilters.players : DEFAULT_FILTER_CATALOG.players,
-    contexts: apiFilters.contexts || [],
-    purposes: apiFilters.purposes || [],
-    durations: apiFilters.durations?.length ? apiFilters.durations : DEFAULT_FILTER_CATALOG.durations,
+    players: apiFilters.players?.length ? apiFilters.players : base.players || DEFAULT_FILTER_CATALOG.players,
+    contexts: apiFilters.contexts?.length ? apiFilters.contexts : base.contexts || [],
+    purposes: apiFilters.purposes?.length ? apiFilters.purposes : base.purposes || [],
+    durations: apiFilters.durations?.length ? apiFilters.durations : base.durations || DEFAULT_FILTER_CATALOG.durations,
   };
 }

@@ -1,0 +1,693 @@
+{
+  "games": [
+    {
+      "id": 1,
+      "name": "Truyền tin nhắn",
+      "description": "Chinese Whisper bằng lời: thì thầm một câu ngắn lần lượt trong nhóm, rồi so câu cuối với câu gốc.",
+      "howToPlay": "1. Cả nhóm đứng hoặc ngồi thành vòng trong lớp.\n2. Leader nghĩ một câu ngắn, dễ hiểu rồi thì thầm vào tai người bên cạnh.\n3. Lần lượt thì thầm đến người cuối. Người cuối nói to câu nhận được.\n4. Leader đọc câu gốc. Cả nhóm cười với chỗ “lạc” — không ai bị phạt.",
+      "durationMin": 8,
+      "durationMax": 8,
+      "minPlayers": 5,
+      "maxPlayers": 5,
+      "context": "Trong lớp học",
+      "purpose": "Khởi động trước khi họp nhóm, Phá băng, Tăng tương tác, Tạo tiếng cười",
+      "preparation": "Không cần chuẩn bị thân thể. Leader chỉ cần nghĩ sẵn 1 câu trung tính.",
+      "preparationRequired": false,
+      "preparationTime": 0,
+      "rules": "Chỉ dùng câu trung tính. Nói rõ, không cố tình phá nếu nhóm còn rụt rè.\n\nQuy định chung:\n• Không ai được bỏ qua lượt. Nếu đang ngại, trả lời ngắn (một từ, một cử chỉ, hoặc “cho mình 5 giây”).\n• Không tạo áp lực cạnh tranh quá mạnh. Không tính điểm trừ, không xếp hạng thua.\n• Không đánh giá hoặc chê câu trả lời.\n• Ưu tiên câu hỏi dễ, đời thường, phù hợp nhóm mới làm quen.\n• Trò không có hoạt động tay chân thì không dành 5 phút chuẩn bị trước.\n• Trò cần tài liệu/hình ảnh (Bingo, Nhìn hình đoán chữ): Leader chuẩn bị nội dung trước khi bắt đầu.\n• Trò có hoạt động tay chân: cho mọi người vài phút đứng dậy / tìm đồ trước khi chơi.\n• Chỉ chơi trực tiếp trong cùng một không gian.",
+      "averageRating": null,
+      "reviewCount": 0,
+      "contexts": [
+        "Trong lớp học"
+      ],
+      "purposes": [
+        "Khởi động trước khi họp nhóm",
+        "Phá băng",
+        "Tăng tương tác",
+        "Tạo tiếng cười"
+      ],
+      "createdAt": "2026-08-15T08:05:55.030696Z",
+      "updatedAt": "2026-08-15T08:05:55.030696Z"
+    },
+    {
+      "id": 2,
+      "name": "Đi tìm báu vật trong nhà",
+      "description": "Mini Scavenger Hunt: mỗi người tìm nhanh một món đồ theo gợi ý rồi khoe với nhóm trong phòng.",
+      "howToPlay": "1. Leader đọc lần lượt 4–5 gợi ý dễ: “một vật màu xanh”, “thứ làm bạn tỉnh táo”, “một món dùng lúc học”.\n2. Mỗi gợi ý: mọi người có 20–30 giây tìm đồ trong phòng / quanh chỗ ngồi.\n3. Lần lượt đưa đồ ra giữa nhóm và nói đúng một câu.\n4. Không ai bị loại. Ai chưa tìm thấy có thể mô tả món đồ.\n5. Leader chọn 1 món “đáng nhớ nhất” để cả nhóm vỗ tay, không chấm điểm.",
+      "durationMin": 18,
+      "durationMax": 18,
+      "minPlayers": 5,
+      "maxPlayers": 5,
+      "context": "Trong phòng",
+      "purpose": "Khởi động trước khi họp nhóm, Phá băng, Tăng tương tác, Tạo sự thoải mái",
+      "preparation": "Có hoạt động tay chân: cho 2–3 phút dọn góc ngồi. Leader soạn sẵn list gợi ý trước.",
+      "preparationRequired": true,
+      "preparationTime": 3,
+      "rules": "Nhịp chậm. Không biến thành cuộc đua.\n\nQuy định chung:\n• Không ai được bỏ qua lượt. Nếu đang ngại, trả lời ngắn (một từ, một cử chỉ, hoặc “cho mình 5 giây”).\n• Không tạo áp lực cạnh tranh quá mạnh. Không tính điểm trừ, không xếp hạng thua.\n• Không đánh giá hoặc chê câu trả lời.\n• Ưu tiên câu hỏi dễ, đời thường, phù hợp nhóm mới làm quen.\n• Trò không có hoạt động tay chân thì không dành 5 phút chuẩn bị trước.\n• Trò cần tài liệu/hình ảnh (Bingo, Nhìn hình đoán chữ): Leader chuẩn bị nội dung trước khi bắt đầu.\n• Trò có hoạt động tay chân: cho mọi người vài phút đứng dậy / tìm đồ trước khi chơi.\n• Chỉ chơi trực tiếp trong cùng một không gian.",
+      "averageRating": null,
+      "reviewCount": 0,
+      "contexts": [
+        "Trong phòng"
+      ],
+      "purposes": [
+        "Khởi động trước khi họp nhóm",
+        "Phá băng",
+        "Tăng tương tác",
+        "Tạo sự thoải mái"
+      ],
+      "createdAt": "2026-08-15T08:05:55.055276Z",
+      "updatedAt": "2026-08-15T08:05:55.055276Z"
+    },
+    {
+      "id": 3,
+      "name": "Đứng lên - Ngồi xuống theo lệnh ngược",
+      "description": "Leader ra lệnh, cả nhóm làm NGƯỢC: nghe “đứng” thì ngồi, nghe “ngồi” thì đứng.",
+      "howToPlay": "1. Cả nhóm đứng tại chỗ trong lớp, chừa khoảng để ngồi xuống an toàn.\n2. Leader nói chậm: “Đứng lên” hoặc “Ngồi xuống”. Cả nhóm làm NGƯỢC lệnh.\n3. Sai thì cười và chơi tiếp, không bị loại.\n4. Kết thúc bằng một lệnh thật để cả nhóm ngồi lại.",
+      "durationMin": 5,
+      "durationMax": 5,
+      "minPlayers": 10,
+      "maxPlayers": 10,
+      "context": "Trong lớp học",
+      "purpose": "Khởi động trước khi họp nhóm, Phá băng, Tăng tương tác, Tạo tiếng cười",
+      "preparation": "Có hoạt động tay chân: dành 1–2 phút đứng dậy. Không chơi nếu ai đang không tiện đứng.",
+      "preparationRequired": true,
+      "preparationTime": 2,
+      "rules": "Nhịp chậm, không loại người.\n\nQuy định chung:\n• Không ai được bỏ qua lượt. Nếu đang ngại, trả lời ngắn (một từ, một cử chỉ, hoặc “cho mình 5 giây”).\n• Không tạo áp lực cạnh tranh quá mạnh. Không tính điểm trừ, không xếp hạng thua.\n• Không đánh giá hoặc chê câu trả lời.\n• Ưu tiên câu hỏi dễ, đời thường, phù hợp nhóm mới làm quen.\n• Trò không có hoạt động tay chân thì không dành 5 phút chuẩn bị trước.\n• Trò cần tài liệu/hình ảnh (Bingo, Nhìn hình đoán chữ): Leader chuẩn bị nội dung trước khi bắt đầu.\n• Trò có hoạt động tay chân: cho mọi người vài phút đứng dậy / tìm đồ trước khi chơi.\n• Chỉ chơi trực tiếp trong cùng một không gian.",
+      "averageRating": null,
+      "reviewCount": 0,
+      "contexts": [
+        "Trong lớp học"
+      ],
+      "purposes": [
+        "Khởi động trước khi họp nhóm",
+        "Phá băng",
+        "Tăng tương tác",
+        "Tạo tiếng cười"
+      ],
+      "createdAt": "2026-08-15T08:05:55.063675Z",
+      "updatedAt": "2026-08-15T08:05:55.063675Z"
+    },
+    {
+      "id": 4,
+      "name": "Câu chuyện 3 chương",
+      "description": "Ba người nối một câu chuyện rất ngắn: mở đầu, tình huống, kết. Người còn lại thêm chi tiết nhỏ.",
+      "howToPlay": "1. Nhóm ngồi thành vòng nhỏ. Leader đưa chủ đề nhẹ: “một buổi học bị mất điện”.\n2. Người 1 nói 2–3 câu mở đầu. Người 2 thêm tình huống. Người 3 kết thúc.\n3. Người còn lại thêm đúng 1 câu chi tiết nhỏ.\n4. Không cần hay. Chỉ cần nối được mạch.",
+      "durationMin": 10,
+      "durationMax": 10,
+      "minPlayers": 4,
+      "maxPlayers": 4,
+      "context": "Nhóm nhỏ",
+      "purpose": "Giao tiếp, Khởi động trước khi họp nhóm, Phá băng, Tăng tương tác, Tạo tiếng cười",
+      "preparation": "Không có hoạt động tay chân — không dành 5 phút chuẩn bị thân thể.",
+      "preparationRequired": false,
+      "preparationTime": 0,
+      "rules": "Không bắt bịa dài. Không chê ý tưởng.\n\nQuy định chung:\n• Không ai được bỏ qua lượt. Nếu đang ngại, trả lời ngắn (một từ, một cử chỉ, hoặc “cho mình 5 giây”).\n• Không tạo áp lực cạnh tranh quá mạnh. Không tính điểm trừ, không xếp hạng thua.\n• Không đánh giá hoặc chê câu trả lời.\n• Ưu tiên câu hỏi dễ, đời thường, phù hợp nhóm mới làm quen.\n• Trò không có hoạt động tay chân thì không dành 5 phút chuẩn bị trước.\n• Trò cần tài liệu/hình ảnh (Bingo, Nhìn hình đoán chữ): Leader chuẩn bị nội dung trước khi bắt đầu.\n• Trò có hoạt động tay chân: cho mọi người vài phút đứng dậy / tìm đồ trước khi chơi.\n• Chỉ chơi trực tiếp trong cùng một không gian.",
+      "averageRating": null,
+      "reviewCount": 0,
+      "contexts": [
+        "Nhóm nhỏ"
+      ],
+      "purposes": [
+        "Giao tiếp",
+        "Khởi động trước khi họp nhóm",
+        "Phá băng",
+        "Tăng tương tác",
+        "Tạo tiếng cười"
+      ],
+      "createdAt": "2026-08-15T08:05:55.080356Z",
+      "updatedAt": "2026-08-15T08:05:55.080356Z"
+    },
+    {
+      "id": 5,
+      "name": "Đặt biệt danh vui",
+      "description": "Mỗi người chọn một biệt danh dễ gọi trong buổi họp mặt, giải thích bằng một câu.",
+      "howToPlay": "1. Leader nêu ví dụ trước: “Hôm nay mình là Trà Đá, vì mình tỉnh táo chậm”.\n2. Lần lượt mỗi người nói: tên thật + biệt danh + lý do một câu.\n3. Biệt danh phải dễ nói, không đụng chạm ngoại hình / điểm yếu.\n4. Leader ghi nhanh lên bảng để mọi người nhớ.",
+      "durationMin": 7,
+      "durationMax": 7,
+      "minPlayers": 5,
+      "maxPlayers": 5,
+      "context": "Trong lớp học",
+      "purpose": "Khởi động trước khi họp nhóm, Làm quen, Phá băng, Tạo sự thoải mái, Tạo tiếng cười",
+      "preparation": "Không cần chuẩn bị trước. Ai không muốn biệt danh có thể dùng tên + một cử chỉ.",
+      "preparationRequired": false,
+      "preparationTime": 0,
+      "rules": "Cấm biệt danh chế giễu.\n\nQuy định chung:\n• Không ai được bỏ qua lượt. Nếu đang ngại, trả lời ngắn (một từ, một cử chỉ, hoặc “cho mình 5 giây”).\n• Không tạo áp lực cạnh tranh quá mạnh. Không tính điểm trừ, không xếp hạng thua.\n• Không đánh giá hoặc chê câu trả lời.\n• Ưu tiên câu hỏi dễ, đời thường, phù hợp nhóm mới làm quen.\n• Trò không có hoạt động tay chân thì không dành 5 phút chuẩn bị trước.\n• Trò cần tài liệu/hình ảnh (Bingo, Nhìn hình đoán chữ): Leader chuẩn bị nội dung trước khi bắt đầu.\n• Trò có hoạt động tay chân: cho mọi người vài phút đứng dậy / tìm đồ trước khi chơi.\n• Chỉ chơi trực tiếp trong cùng một không gian.",
+      "averageRating": null,
+      "reviewCount": 0,
+      "contexts": [
+        "Trong lớp học"
+      ],
+      "purposes": [
+        "Khởi động trước khi họp nhóm",
+        "Làm quen",
+        "Phá băng",
+        "Tạo sự thoải mái",
+        "Tạo tiếng cười"
+      ],
+      "createdAt": "2026-08-15T08:05:55.087923Z",
+      "updatedAt": "2026-08-15T08:05:55.087923Z"
+    },
+    {
+      "id": 6,
+      "name": "Tìm điểm chung nhanh",
+      "description": "Cả nhóm tìm càng nhiều điểm chung càng tốt trong thời gian ngắn, không cần sâu.",
+      "howToPlay": "1. Leader đặt câu dễ: “Ai từng thức khuya làm bài giơ tay”.\n2. Những người giơ tay nói thêm 1 chi tiết rất ngắn.\n3. Lặp 4–5 câu: đồ uống, môn học, thú cưng, ca sĩ nghe dạo này.\n4. Leader ghi 3 điểm chung lên bảng rồi cả nhóm bắt tay.",
+      "durationMin": 8,
+      "durationMax": 8,
+      "minPlayers": 5,
+      "maxPlayers": 5,
+      "context": "Nhóm nhỏ",
+      "purpose": "Khởi động trước khi họp nhóm, Làm quen, Phá băng, Tìm điểm chung, Tạo sự thoải mái",
+      "preparation": "Không cần chuẩn bị thân thể. Leader chỉ cần 4–5 câu hỏi đóng (có/không) soạn sẵn.",
+      "preparationRequired": false,
+      "preparationTime": 0,
+      "rules": "Không hỏi thu nhập, điểm số, chuyện gia đình nhạy cảm.\n\nQuy định chung:\n• Không ai được bỏ qua lượt. Nếu đang ngại, trả lời ngắn (một từ, một cử chỉ, hoặc “cho mình 5 giây”).\n• Không tạo áp lực cạnh tranh quá mạnh. Không tính điểm trừ, không xếp hạng thua.\n• Không đánh giá hoặc chê câu trả lời.\n• Ưu tiên câu hỏi dễ, đời thường, phù hợp nhóm mới làm quen.\n• Trò không có hoạt động tay chân thì không dành 5 phút chuẩn bị trước.\n• Trò cần tài liệu/hình ảnh (Bingo, Nhìn hình đoán chữ): Leader chuẩn bị nội dung trước khi bắt đầu.\n• Trò có hoạt động tay chân: cho mọi người vài phút đứng dậy / tìm đồ trước khi chơi.\n• Chỉ chơi trực tiếp trong cùng một không gian.",
+      "averageRating": null,
+      "reviewCount": 0,
+      "contexts": [
+        "Nhóm nhỏ"
+      ],
+      "purposes": [
+        "Khởi động trước khi họp nhóm",
+        "Làm quen",
+        "Phá băng",
+        "Tìm điểm chung",
+        "Tạo sự thoải mái"
+      ],
+      "createdAt": "2026-08-15T08:05:55.097145Z",
+      "updatedAt": "2026-08-15T08:05:55.097145Z"
+    },
+    {
+      "id": 7,
+      "name": "Đoán chủ nhân",
+      "description": "Mỗi người chọn một món đồ. Cả nhóm đoán món đó của ai, rồi chủ nhân nói một câu.",
+      "howToPlay": "1. Mỗi người chọn một món gần tầm tay, đặt úp hoặc giấu tên.\n2. Lần lượt giơ đồ lên, chưa nói tên chủ nhân.\n3. Cả nhóm đoán chủ nhân. Chủ nhân xác nhận và nói 1 câu về món đồ.\n4. Không cần đoán đúng hết.",
+      "durationMin": 10,
+      "durationMax": 10,
+      "minPlayers": 5,
+      "maxPlayers": 5,
+      "context": "Trong lớp học",
+      "purpose": "Giao tiếp, Làm quen, Phá băng, Tạo tiếng cười",
+      "preparation": "Cho 1–2 phút chọn đồ trong lớp. Không dùng đồ mang tính riêng tư quá.",
+      "preparationRequired": true,
+      "preparationTime": 2,
+      "rules": "Không tạo áp lực phải đoán đúng.\n\nQuy định chung:\n• Không ai được bỏ qua lượt. Nếu đang ngại, trả lời ngắn (một từ, một cử chỉ, hoặc “cho mình 5 giây”).\n• Không tạo áp lực cạnh tranh quá mạnh. Không tính điểm trừ, không xếp hạng thua.\n• Không đánh giá hoặc chê câu trả lời.\n• Ưu tiên câu hỏi dễ, đời thường, phù hợp nhóm mới làm quen.\n• Trò không có hoạt động tay chân thì không dành 5 phút chuẩn bị trước.\n• Trò cần tài liệu/hình ảnh (Bingo, Nhìn hình đoán chữ): Leader chuẩn bị nội dung trước khi bắt đầu.\n• Trò có hoạt động tay chân: cho mọi người vài phút đứng dậy / tìm đồ trước khi chơi.\n• Chỉ chơi trực tiếp trong cùng một không gian.",
+      "averageRating": null,
+      "reviewCount": 0,
+      "contexts": [
+        "Trong lớp học"
+      ],
+      "purposes": [
+        "Giao tiếp",
+        "Làm quen",
+        "Phá băng",
+        "Tạo tiếng cười"
+      ],
+      "createdAt": "2026-08-15T08:05:55.113601Z",
+      "updatedAt": "2026-08-15T08:05:55.113601Z"
+    },
+    {
+      "id": 8,
+      "name": "Bingo làm quen",
+      "description": "Mỗi ô bingo là một câu dễ. Tìm người trong lớp khớp và đánh dấu.",
+      "howToPlay": "1. Leader phát bảng bingo 3x3 hoặc 4x4 đã in sẵn.\n2. Mỗi ô là một đặc điểm nhẹ: “hay nghe podcast”, “nấu được một món”, “thích mèo”.\n3. Đi quanh lớp, hỏi nhau. Ai khớp ký tên vào ô và kể đúng 1 câu.\n4. Ai có 1 hàng thì hô “Bingo” — cả nhóm vỗ tay, không tặng phạt.",
+      "durationMin": 15,
+      "durationMax": 15,
+      "minPlayers": 12,
+      "maxPlayers": 12,
+      "context": "Trong lớp học",
+      "purpose": "Khởi động trước khi họp nhóm, Làm quen, Phá băng, Tìm điểm chung, Tăng tương tác",
+      "preparation": "Leader phải chuẩn bị bảng bingo trước khi bắt đầu. Không thêm 5 phút khởi động thân thể.",
+      "preparationRequired": true,
+      "preparationTime": 10,
+      "rules": "Ô phải dễ, phù hợp nhóm mới.\n\nQuy định chung:\n• Không ai được bỏ qua lượt. Nếu đang ngại, trả lời ngắn (một từ, một cử chỉ, hoặc “cho mình 5 giây”).\n• Không tạo áp lực cạnh tranh quá mạnh. Không tính điểm trừ, không xếp hạng thua.\n• Không đánh giá hoặc chê câu trả lời.\n• Ưu tiên câu hỏi dễ, đời thường, phù hợp nhóm mới làm quen.\n• Trò không có hoạt động tay chân thì không dành 5 phút chuẩn bị trước.\n• Trò cần tài liệu/hình ảnh (Bingo, Nhìn hình đoán chữ): Leader chuẩn bị nội dung trước khi bắt đầu.\n• Trò có hoạt động tay chân: cho mọi người vài phút đứng dậy / tìm đồ trước khi chơi.\n• Chỉ chơi trực tiếp trong cùng một không gian.",
+      "averageRating": null,
+      "reviewCount": 0,
+      "contexts": [
+        "Trong lớp học"
+      ],
+      "purposes": [
+        "Khởi động trước khi họp nhóm",
+        "Làm quen",
+        "Phá băng",
+        "Tìm điểm chung",
+        "Tăng tương tác"
+      ],
+      "createdAt": "2026-08-15T08:05:55.122018Z",
+      "updatedAt": "2026-08-15T08:05:55.122018Z"
+    },
+    {
+      "id": 9,
+      "name": "Từ nối từ",
+      "description": "Người trước nói một từ, người sau nói từ liên quan. Giữ nhịp chậm, không loại.",
+      "howToPlay": "1. Hai người ngồi đối diện. Leader (hoặc một người) mở từ: “Nhóm”.\n2. Người kia nói một từ liên quan: “họp”, “bài tập”, “lớp”…\n3. Đi vài vòng. Nếu kẹt, được hỏi gợi ý: “nghĩ về đồ ăn / môn học”.\n4. Kết bằng từ cuối cùng nói đồng thanh.",
+      "durationMin": 6,
+      "durationMax": 6,
+      "minPlayers": 2,
+      "maxPlayers": 2,
+      "context": "Trong phòng",
+      "purpose": "Giao tiếp, Khởi động trước khi họp nhóm, Phá băng, Tăng tương tác",
+      "preparation": "Không cần chuẩn bị trước. Có thể bắt đầu ngay.",
+      "preparationRequired": false,
+      "preparationTime": 0,
+      "rules": "Không tính giờ gấp. Im lặng 5 giây vẫn được.\n\nQuy định chung:\n• Không ai được bỏ qua lượt. Nếu đang ngại, trả lời ngắn (một từ, một cử chỉ, hoặc “cho mình 5 giây”).\n• Không tạo áp lực cạnh tranh quá mạnh. Không tính điểm trừ, không xếp hạng thua.\n• Không đánh giá hoặc chê câu trả lời.\n• Ưu tiên câu hỏi dễ, đời thường, phù hợp nhóm mới làm quen.\n• Trò không có hoạt động tay chân thì không dành 5 phút chuẩn bị trước.\n• Trò cần tài liệu/hình ảnh (Bingo, Nhìn hình đoán chữ): Leader chuẩn bị nội dung trước khi bắt đầu.\n• Trò có hoạt động tay chân: cho mọi người vài phút đứng dậy / tìm đồ trước khi chơi.\n• Chỉ chơi trực tiếp trong cùng một không gian.",
+      "averageRating": null,
+      "reviewCount": 0,
+      "contexts": [
+        "Trong phòng"
+      ],
+      "purposes": [
+        "Giao tiếp",
+        "Khởi động trước khi họp nhóm",
+        "Phá băng",
+        "Tăng tương tác"
+      ],
+      "createdAt": "2026-08-15T08:05:55.130234Z",
+      "updatedAt": "2026-08-15T08:05:55.130234Z"
+    },
+    {
+      "id": 10,
+      "name": "Nhìn hình đoán chữ",
+      "description": "Leader chiếu hoặc giơ hình; nhóm đoán từ/cụm từ. Ưu tiên hình vui, không đánh đố.",
+      "howToPlay": "1. Leader chuẩn bị 6–8 hình in sẵn hoặc viết trên bảng.\n2. Giơ từng hình 20–30 giây.\n3. Mọi người đoán nói to, không giành lời.\n4. Leader chốt đáp án rồi sang hình tiếp. Dừng khi hết giờ.",
+      "durationMin": 10,
+      "durationMax": 10,
+      "minPlayers": 5,
+      "maxPlayers": 5,
+      "context": "Trong lớp học",
+      "purpose": "Khởi động trước khi họp nhóm, Phá băng, Tăng tương tác, Tạo tiếng cười",
+      "preparation": "Leader phải chuẩn bị hình trước. Tránh hình phản cảm hoặc quá khó.",
+      "preparationRequired": true,
+      "preparationTime": 10,
+      "rules": "Không xếp hạng ai đoán nhanh nhất.\n\nQuy định chung:\n• Không ai được bỏ qua lượt. Nếu đang ngại, trả lời ngắn (một từ, một cử chỉ, hoặc “cho mình 5 giây”).\n• Không tạo áp lực cạnh tranh quá mạnh. Không tính điểm trừ, không xếp hạng thua.\n• Không đánh giá hoặc chê câu trả lời.\n• Ưu tiên câu hỏi dễ, đời thường, phù hợp nhóm mới làm quen.\n• Trò không có hoạt động tay chân thì không dành 5 phút chuẩn bị trước.\n• Trò cần tài liệu/hình ảnh (Bingo, Nhìn hình đoán chữ): Leader chuẩn bị nội dung trước khi bắt đầu.\n• Trò có hoạt động tay chân: cho mọi người vài phút đứng dậy / tìm đồ trước khi chơi.\n• Chỉ chơi trực tiếp trong cùng một không gian.",
+      "averageRating": null,
+      "reviewCount": 0,
+      "contexts": [
+        "Trong lớp học"
+      ],
+      "purposes": [
+        "Khởi động trước khi họp nhóm",
+        "Phá băng",
+        "Tăng tương tác",
+        "Tạo tiếng cười"
+      ],
+      "createdAt": "2026-08-15T08:05:55.146283Z",
+      "updatedAt": "2026-08-15T08:05:55.146283Z"
+    },
+    {
+      "id": 11,
+      "name": "Giới thiệu bằng 3 từ",
+      "description": "Mỗi người mô tả mình tuần này bằng đúng 3 từ, rồi giải thích 10 giây nếu muốn.",
+      "howToPlay": "1. Leader làm mẫu: “Deadline – trà đá – mưa”.\n2. Mỗi người nói 3 từ. Có thể viết ra giấy rồi đọc.\n3. Không bắt kể dài. Ai ngại chỉ cần 3 từ, không giải thích.\n4. Leader gom điểm chung của cả nhóm.",
+      "durationMin": 5,
+      "durationMax": 5,
+      "minPlayers": 5,
+      "maxPlayers": 5,
+      "context": "Nhóm nhỏ",
+      "purpose": "Giao tiếp, Khởi động trước khi họp nhóm, Làm quen, Phá băng, Tạo sự thoải mái",
+      "preparation": "Cho 20 giây nghĩ trước khi bắt đầu vòng nói.",
+      "preparationRequired": false,
+      "preparationTime": 0,
+      "rules": "Câu trả lời ba từ là đủ.\n\nQuy định chung:\n• Không ai được bỏ qua lượt. Nếu đang ngại, trả lời ngắn (một từ, một cử chỉ, hoặc “cho mình 5 giây”).\n• Không tạo áp lực cạnh tranh quá mạnh. Không tính điểm trừ, không xếp hạng thua.\n• Không đánh giá hoặc chê câu trả lời.\n• Ưu tiên câu hỏi dễ, đời thường, phù hợp nhóm mới làm quen.\n• Trò không có hoạt động tay chân thì không dành 5 phút chuẩn bị trước.\n• Trò cần tài liệu/hình ảnh (Bingo, Nhìn hình đoán chữ): Leader chuẩn bị nội dung trước khi bắt đầu.\n• Trò có hoạt động tay chân: cho mọi người vài phút đứng dậy / tìm đồ trước khi chơi.\n• Chỉ chơi trực tiếp trong cùng một không gian.",
+      "averageRating": null,
+      "reviewCount": 0,
+      "contexts": [
+        "Nhóm nhỏ"
+      ],
+      "purposes": [
+        "Giao tiếp",
+        "Khởi động trước khi họp nhóm",
+        "Làm quen",
+        "Phá băng",
+        "Tạo sự thoải mái"
+      ],
+      "createdAt": "2026-08-15T08:05:55.155292Z",
+      "updatedAt": "2026-08-15T08:05:55.155292Z"
+    },
+    {
+      "id": 12,
+      "name": "This or That",
+      "description": "Chọn nhanh một trong hai thứ dễ: trà/cà phê, sáng/tối, mèo/chó… Không có đáp án đúng.",
+      "howToPlay": "1. Leader đọc cặp: “Trà sữa hay nước lọc?”\n2. Mọi người giơ 1 ngón / 2 ngón, hoặc bước sang trái/phải trong lớp.\n3. Leader hỏi 1–2 người vì sao — trả lời một câu.\n4. Lặp 5–6 cặp đời thường, không chính trị, không ngoại hình.",
+      "durationMin": 7,
+      "durationMax": 7,
+      "minPlayers": 8,
+      "maxPlayers": 8,
+      "context": "Trong lớp học",
+      "purpose": "Khởi động trước khi họp nhóm, Phá băng, Tăng tương tác, Tạo sự thoải mái, Tạo tiếng cười",
+      "preparation": "Không cần chuẩn bị thân thể. Leader soạn sẵn 5–6 cặp lựa chọn dễ.",
+      "preparationRequired": false,
+      "preparationTime": 0,
+      "rules": "Không tranh luận ai đúng.\n\nQuy định chung:\n• Không ai được bỏ qua lượt. Nếu đang ngại, trả lời ngắn (một từ, một cử chỉ, hoặc “cho mình 5 giây”).\n• Không tạo áp lực cạnh tranh quá mạnh. Không tính điểm trừ, không xếp hạng thua.\n• Không đánh giá hoặc chê câu trả lời.\n• Ưu tiên câu hỏi dễ, đời thường, phù hợp nhóm mới làm quen.\n• Trò không có hoạt động tay chân thì không dành 5 phút chuẩn bị trước.\n• Trò cần tài liệu/hình ảnh (Bingo, Nhìn hình đoán chữ): Leader chuẩn bị nội dung trước khi bắt đầu.\n• Trò có hoạt động tay chân: cho mọi người vài phút đứng dậy / tìm đồ trước khi chơi.\n• Chỉ chơi trực tiếp trong cùng một không gian.",
+      "averageRating": null,
+      "reviewCount": 0,
+      "contexts": [
+        "Trong lớp học"
+      ],
+      "purposes": [
+        "Khởi động trước khi họp nhóm",
+        "Phá băng",
+        "Tăng tương tác",
+        "Tạo sự thoải mái",
+        "Tạo tiếng cười"
+      ],
+      "createdAt": "2026-08-15T08:05:55.163669Z",
+      "updatedAt": "2026-08-15T08:05:55.163669Z"
+    },
+    {
+      "id": 13,
+      "name": "Emoji tâm trạng",
+      "description": "Mỗi người chọn 1–2 biểu cảm hoặc sticker giấy để mô tả cảm xúc lúc bắt đầu buổi họp mặt.",
+      "howToPlay": "1. Leader phát giấy nhỏ / sticky note. Mọi người vẽ một mặt cười hoặc viết 1 từ cảm xúc.\n2. Lần lượt giơ giấy lên. Muốn nói thêm một câu thì nói, không bắt buộc.\n3. Leader gom cảm xúc nhóm rồi chuyển sang việc chính, không phán xét.",
+      "durationMin": 4,
+      "durationMax": 4,
+      "minPlayers": 5,
+      "maxPlayers": 5,
+      "context": "Trong phòng",
+      "purpose": "Giao tiếp, Khởi động trước khi họp nhóm, Phá băng, Tạo sự thoải mái",
+      "preparation": "Không có hoạt động tay chân nặng — không thêm 5 phút chuẩn bị. Có thể dùng giấy sẵn trong phòng.",
+      "preparationRequired": false,
+      "preparationTime": 0,
+      "rules": "Không hỏi “vì sao buồn”.\n\nQuy định chung:\n• Không ai được bỏ qua lượt. Nếu đang ngại, trả lời ngắn (một từ, một cử chỉ, hoặc “cho mình 5 giây”).\n• Không tạo áp lực cạnh tranh quá mạnh. Không tính điểm trừ, không xếp hạng thua.\n• Không đánh giá hoặc chê câu trả lời.\n• Ưu tiên câu hỏi dễ, đời thường, phù hợp nhóm mới làm quen.\n• Trò không có hoạt động tay chân thì không dành 5 phút chuẩn bị trước.\n• Trò cần tài liệu/hình ảnh (Bingo, Nhìn hình đoán chữ): Leader chuẩn bị nội dung trước khi bắt đầu.\n• Trò có hoạt động tay chân: cho mọi người vài phút đứng dậy / tìm đồ trước khi chơi.\n• Chỉ chơi trực tiếp trong cùng một không gian.",
+      "averageRating": null,
+      "reviewCount": 0,
+      "contexts": [
+        "Trong phòng"
+      ],
+      "purposes": [
+        "Giao tiếp",
+        "Khởi động trước khi họp nhóm",
+        "Phá băng",
+        "Tạo sự thoải mái"
+      ],
+      "createdAt": "2026-08-15T08:05:55.180201Z",
+      "updatedAt": "2026-08-15T08:05:55.180201Z"
+    },
+    {
+      "id": 14,
+      "name": "Show and Tell 30 giây",
+      "description": "Khoe một vật trong tầm tay và nói tối đa 30 giây vì sao hôm nay để nó gần mình.",
+      "howToPlay": "1. Cho 1 phút tìm vật (ly, tai nghe, vở, móc khóa).\n2. Mỗi người: giơ vật + nói tối đa 30 giây.\n3. Nhóm vỗ tay nhẹ. Không so sánh vật “cool” hơn.",
+      "durationMin": 8,
+      "durationMax": 8,
+      "minPlayers": 5,
+      "maxPlayers": 5,
+      "context": "Trong phòng",
+      "purpose": "Làm quen, Phá băng, Tăng tương tác, Tạo sự thoải mái",
+      "preparation": "Có thao tác cầm đồ: cho 1 phút tìm vật trong phòng.",
+      "preparationRequired": true,
+      "preparationTime": 1,
+      "rules": "Leader canh giờ nhẹ, không cắt lời đột ngột.\n\nQuy định chung:\n• Không ai được bỏ qua lượt. Nếu đang ngại, trả lời ngắn (một từ, một cử chỉ, hoặc “cho mình 5 giây”).\n• Không tạo áp lực cạnh tranh quá mạnh. Không tính điểm trừ, không xếp hạng thua.\n• Không đánh giá hoặc chê câu trả lời.\n• Ưu tiên câu hỏi dễ, đời thường, phù hợp nhóm mới làm quen.\n• Trò không có hoạt động tay chân thì không dành 5 phút chuẩn bị trước.\n• Trò cần tài liệu/hình ảnh (Bingo, Nhìn hình đoán chữ): Leader chuẩn bị nội dung trước khi bắt đầu.\n• Trò có hoạt động tay chân: cho mọi người vài phút đứng dậy / tìm đồ trước khi chơi.\n• Chỉ chơi trực tiếp trong cùng một không gian.",
+      "averageRating": null,
+      "reviewCount": 0,
+      "contexts": [
+        "Trong phòng"
+      ],
+      "purposes": [
+        "Làm quen",
+        "Phá băng",
+        "Tăng tương tác",
+        "Tạo sự thoải mái"
+      ],
+      "createdAt": "2026-08-15T08:05:55.188726Z",
+      "updatedAt": "2026-08-15T08:05:55.188726Z"
+    },
+    {
+      "id": 15,
+      "name": "Would You Rather nhẹ",
+      "description": "Chọn một trong hai tình huống vô hại, giải thích đúng một câu. Chơi khi đang đi hoặc đứng trên campus.",
+      "howToPlay": "1. Leader đọc: “Thức khuya làm bài hay dậy sớm làm bài?”\n2. Giơ tay hoặc bước sang hai phía.\n3. 1–2 người giải thích một câu.\n4. Lặp 4–5 câu. Câu cuối liên quan việc nhóm sắp làm.",
+      "durationMin": 7,
+      "durationMax": 7,
+      "minPlayers": 5,
+      "maxPlayers": 5,
+      "context": "Campus",
+      "purpose": "Khởi động trước khi họp nhóm, Phá băng, Tăng tương tác, Tạo tiếng cười",
+      "preparation": "Không cần chuẩn bị trước. Cấm tình huống sợ hãi, ngoại hình, tiền bạc.",
+      "preparationRequired": false,
+      "preparationTime": 0,
+      "rules": "Không có đáp án thắng.\n\nQuy định chung:\n• Không ai được bỏ qua lượt. Nếu đang ngại, trả lời ngắn (một từ, một cử chỉ, hoặc “cho mình 5 giây”).\n• Không tạo áp lực cạnh tranh quá mạnh. Không tính điểm trừ, không xếp hạng thua.\n• Không đánh giá hoặc chê câu trả lời.\n• Ưu tiên câu hỏi dễ, đời thường, phù hợp nhóm mới làm quen.\n• Trò không có hoạt động tay chân thì không dành 5 phút chuẩn bị trước.\n• Trò cần tài liệu/hình ảnh (Bingo, Nhìn hình đoán chữ): Leader chuẩn bị nội dung trước khi bắt đầu.\n• Trò có hoạt động tay chân: cho mọi người vài phút đứng dậy / tìm đồ trước khi chơi.\n• Chỉ chơi trực tiếp trong cùng một không gian.",
+      "averageRating": null,
+      "reviewCount": 0,
+      "contexts": [
+        "Campus"
+      ],
+      "purposes": [
+        "Khởi động trước khi họp nhóm",
+        "Phá băng",
+        "Tăng tương tác",
+        "Tạo tiếng cười"
+      ],
+      "createdAt": "2026-08-15T08:05:55.197075Z",
+      "updatedAt": "2026-08-15T08:05:55.197075Z"
+    },
+    {
+      "id": 16,
+      "name": "Câu chuyện nối câu",
+      "description": "Mỗi người thêm đúng một câu vào câu chuyện chung, đi một vòng.",
+      "howToPlay": "1. Leader mở: “Sáng nay một nhóm sinh viên vào lớp và thấy…”\n2. Mỗi người thêm 1 câu. Đi hết vòng, có thể vòng 2 nếu còn giờ.\n3. Ai kẹt được gợi ý: “thêm một chi tiết đồ vật / thời tiết”.\n4. Người cuối kết thúc có hậu.",
+      "durationMin": 8,
+      "durationMax": 8,
+      "minPlayers": 5,
+      "maxPlayers": 5,
+      "context": "Nhóm nhỏ",
+      "purpose": "Giao tiếp, Khởi động trước khi họp nhóm, Phá băng, Tăng tương tác, Tạo tiếng cười",
+      "preparation": "Không cần chuẩn bị thân thể. Nếu ngại, nói một câu rất ngắn như “rồi mất điện”.",
+      "preparationRequired": false,
+      "preparationTime": 0,
+      "rules": "Không được bỏ lượt.\n\nQuy định chung:\n• Không ai được bỏ qua lượt. Nếu đang ngại, trả lời ngắn (một từ, một cử chỉ, hoặc “cho mình 5 giây”).\n• Không tạo áp lực cạnh tranh quá mạnh. Không tính điểm trừ, không xếp hạng thua.\n• Không đánh giá hoặc chê câu trả lời.\n• Ưu tiên câu hỏi dễ, đời thường, phù hợp nhóm mới làm quen.\n• Trò không có hoạt động tay chân thì không dành 5 phút chuẩn bị trước.\n• Trò cần tài liệu/hình ảnh (Bingo, Nhìn hình đoán chữ): Leader chuẩn bị nội dung trước khi bắt đầu.\n• Trò có hoạt động tay chân: cho mọi người vài phút đứng dậy / tìm đồ trước khi chơi.\n• Chỉ chơi trực tiếp trong cùng một không gian.",
+      "averageRating": null,
+      "reviewCount": 0,
+      "contexts": [
+        "Nhóm nhỏ"
+      ],
+      "purposes": [
+        "Giao tiếp",
+        "Khởi động trước khi họp nhóm",
+        "Phá băng",
+        "Tăng tương tác",
+        "Tạo tiếng cười"
+      ],
+      "createdAt": "2026-08-15T08:05:55.205444Z",
+      "updatedAt": "2026-08-15T08:05:55.205444Z"
+    },
+    {
+      "id": 17,
+      "name": "High-five ảo theo chủ đề",
+      "description": "Leader nêu chủ đề, ai khớp thì high-five người bên cạnh. Rất nhanh, rất ít nói.",
+      "howToPlay": "1. Cả nhóm đứng thành vòng trong lớp.\n2. “High-five nếu hôm nay uống cà phê.” Ai khớp high-five người cạnh mình.\n3. Đổi chủ đề: ngủ muộn, thích mèo, đang mang balo.\n4. Làm 6–8 chủ đề. Chủ đề cuối: “High-five nếu sẵn sàng vào việc”.",
+      "durationMin": 4,
+      "durationMax": 4,
+      "minPlayers": 10,
+      "maxPlayers": 10,
+      "context": "Trong lớp học",
+      "purpose": "Khởi động trước khi họp nhóm, Phá băng, Tăng tương tác, Tạo sự thoải mái",
+      "preparation": "Phù hợp nhóm rụt rè vì gần như không phải nói. Không cần 5 phút chuẩn bị.",
+      "preparationRequired": false,
+      "preparationTime": 0,
+      "rules": "Không bắt kể thêm. Chỉ chơi trực tiếp trong lớp.\n\nQuy định chung:\n• Không ai được bỏ qua lượt. Nếu đang ngại, trả lời ngắn (một từ, một cử chỉ, hoặc “cho mình 5 giây”).\n• Không tạo áp lực cạnh tranh quá mạnh. Không tính điểm trừ, không xếp hạng thua.\n• Không đánh giá hoặc chê câu trả lời.\n• Ưu tiên câu hỏi dễ, đời thường, phù hợp nhóm mới làm quen.\n• Trò không có hoạt động tay chân thì không dành 5 phút chuẩn bị trước.\n• Trò cần tài liệu/hình ảnh (Bingo, Nhìn hình đoán chữ): Leader chuẩn bị nội dung trước khi bắt đầu.\n• Trò có hoạt động tay chân: cho mọi người vài phút đứng dậy / tìm đồ trước khi chơi.\n• Chỉ chơi trực tiếp trong cùng một không gian.",
+      "averageRating": null,
+      "reviewCount": 0,
+      "contexts": [
+        "Trong lớp học"
+      ],
+      "purposes": [
+        "Khởi động trước khi họp nhóm",
+        "Phá băng",
+        "Tăng tương tác",
+        "Tạo sự thoải mái"
+      ],
+      "createdAt": "2026-08-15T08:05:55.213632Z",
+      "updatedAt": "2026-08-15T08:05:55.213632Z"
+    },
+    {
+      "id": 18,
+      "name": "Câu hỏi 3 giây",
+      "description": "Leader hỏi câu siêu dễ, mỗi người trả lời đúng một từ trong khoảng 3–5 giây.",
+      "howToPlay": "1. Câu mẫu: “Đồ uống lúc này?”, “Môn đang tới hạn?”.\n2. Đi vòng quanh lớp. Không giải thích.\n3. 2–3 vòng câu khác nhau.\n4. Ai chưa nghĩ ra nói “nước lọc” / “chưa nghĩ” — vẫn tính là đã tham gia.",
+      "durationMin": 5,
+      "durationMax": 5,
+      "minPlayers": 5,
+      "maxPlayers": 5,
+      "context": "Trong lớp học",
+      "purpose": "Giao tiếp, Khởi động trước khi họp nhóm, Phá băng, Tăng tương tác",
+      "preparation": "Không cần chuẩn bị trước. Câu phải trả lời được bằng một từ.",
+      "preparationRequired": false,
+      "preparationTime": 0,
+      "rules": "Không biến thành thẩm vấn. Leader không comment đúng sai.\n\nQuy định chung:\n• Không ai được bỏ qua lượt. Nếu đang ngại, trả lời ngắn (một từ, một cử chỉ, hoặc “cho mình 5 giây”).\n• Không tạo áp lực cạnh tranh quá mạnh. Không tính điểm trừ, không xếp hạng thua.\n• Không đánh giá hoặc chê câu trả lời.\n• Ưu tiên câu hỏi dễ, đời thường, phù hợp nhóm mới làm quen.\n• Trò không có hoạt động tay chân thì không dành 5 phút chuẩn bị trước.\n• Trò cần tài liệu/hình ảnh (Bingo, Nhìn hình đoán chữ): Leader chuẩn bị nội dung trước khi bắt đầu.\n• Trò có hoạt động tay chân: cho mọi người vài phút đứng dậy / tìm đồ trước khi chơi.\n• Chỉ chơi trực tiếp trong cùng một không gian.",
+      "averageRating": null,
+      "reviewCount": 0,
+      "contexts": [
+        "Trong lớp học"
+      ],
+      "purposes": [
+        "Giao tiếp",
+        "Khởi động trước khi họp nhóm",
+        "Phá băng",
+        "Tăng tương tác"
+      ],
+      "createdAt": "2026-08-15T08:05:55.222147Z",
+      "updatedAt": "2026-08-15T08:05:55.222147Z"
+    },
+    {
+      "id": 19,
+      "name": "Con vật đại diện",
+      "description": "Chọn một con vật cho “version mình lúc họp nhóm” và nói lý do một câu. Chơi ngoài trời nếu tiện.",
+      "howToPlay": "1. Leader mẫu: “Mình là mèo hôm nay, vì muốn ngồi im nghe trước”.\n2. Mỗi người chọn con vật. Không cần độc lạ.\n3. Nói 1 câu lý do. Leader ghi nhanh lên giấy.\n4. Không bắt chước tiếng kêu nếu ai ngại.",
+      "durationMin": 6,
+      "durationMax": 6,
+      "minPlayers": 5,
+      "maxPlayers": 5,
+      "context": "Ngoài trời",
+      "purpose": "Làm quen, Phá băng, Tạo sự thoải mái, Tạo tiếng cười",
+      "preparation": "Không cần chuẩn bị trước. Không gán con vật cho người khác.",
+      "preparationRequired": false,
+      "preparationTime": 0,
+      "rules": "Không đùa theo hướng chế giễu.\n\nQuy định chung:\n• Không ai được bỏ qua lượt. Nếu đang ngại, trả lời ngắn (một từ, một cử chỉ, hoặc “cho mình 5 giây”).\n• Không tạo áp lực cạnh tranh quá mạnh. Không tính điểm trừ, không xếp hạng thua.\n• Không đánh giá hoặc chê câu trả lời.\n• Ưu tiên câu hỏi dễ, đời thường, phù hợp nhóm mới làm quen.\n• Trò không có hoạt động tay chân thì không dành 5 phút chuẩn bị trước.\n• Trò cần tài liệu/hình ảnh (Bingo, Nhìn hình đoán chữ): Leader chuẩn bị nội dung trước khi bắt đầu.\n• Trò có hoạt động tay chân: cho mọi người vài phút đứng dậy / tìm đồ trước khi chơi.\n• Chỉ chơi trực tiếp trong cùng một không gian.",
+      "averageRating": null,
+      "reviewCount": 0,
+      "contexts": [
+        "Ngoài trời"
+      ],
+      "purposes": [
+        "Làm quen",
+        "Phá băng",
+        "Tạo sự thoải mái",
+        "Tạo tiếng cười"
+      ],
+      "createdAt": "2026-08-15T08:05:55.230596Z",
+      "updatedAt": "2026-08-15T08:05:55.230596Z"
+    },
+    {
+      "id": 20,
+      "name": "Tìm người cùng vibe",
+      "description": "Leader nêu 4 vibe; mỗi người chọn 1. Những người cùng vibe đứng lại gần nhau trên campus / hành lang.",
+      "howToPlay": "1. Bốn vibe: “muốn nghe”, “muốn nói”, “muốn pha trò”, “muốn vào việc luôn”.\n2. Mỗi người chọn 1 (giơ số ngón tay).\n3. Cùng số thì bước lại gần và chào nhau. Không có vibe nào “đúng hơn”.\n4. Leader điều chỉnh cách họp mặt cho khớp năng lượng nhóm.",
+      "durationMin": 5,
+      "durationMax": 5,
+      "minPlayers": 8,
+      "maxPlayers": 8,
+      "context": "Campus",
+      "purpose": "Khởi động trước khi họp nhóm, Phá băng, Tìm điểm chung, Tạo sự thoải mái",
+      "preparation": "Không cần chuẩn bị trước. Giúp nhóm mới không bị ép phải nói nhiều.",
+      "preparationRequired": false,
+      "preparationTime": 0,
+      "rules": "Tôn trọng người chọn “muốn nghe”.\n\nQuy định chung:\n• Không ai được bỏ qua lượt. Nếu đang ngại, trả lời ngắn (một từ, một cử chỉ, hoặc “cho mình 5 giây”).\n• Không tạo áp lực cạnh tranh quá mạnh. Không tính điểm trừ, không xếp hạng thua.\n• Không đánh giá hoặc chê câu trả lời.\n• Ưu tiên câu hỏi dễ, đời thường, phù hợp nhóm mới làm quen.\n• Trò không có hoạt động tay chân thì không dành 5 phút chuẩn bị trước.\n• Trò cần tài liệu/hình ảnh (Bingo, Nhìn hình đoán chữ): Leader chuẩn bị nội dung trước khi bắt đầu.\n• Trò có hoạt động tay chân: cho mọi người vài phút đứng dậy / tìm đồ trước khi chơi.\n• Chỉ chơi trực tiếp trong cùng một không gian.",
+      "averageRating": null,
+      "reviewCount": 0,
+      "contexts": [
+        "Campus"
+      ],
+      "purposes": [
+        "Khởi động trước khi họp nhóm",
+        "Phá băng",
+        "Tìm điểm chung",
+        "Tạo sự thoải mái"
+      ],
+      "createdAt": "2026-08-15T08:05:55.238670Z",
+      "updatedAt": "2026-08-15T08:05:55.238670Z"
+    }
+  ],
+  "filters": {
+    "players": [
+      {
+        "value": "2",
+        "label": "2 người"
+      },
+      {
+        "value": "3-4",
+        "label": "3–4 người"
+      },
+      {
+        "value": "5",
+        "label": "5 người"
+      },
+      {
+        "value": "6-10",
+        "label": "6–10 người"
+      },
+      {
+        "value": "10+",
+        "label": "10+ người"
+      }
+    ],
+    "contexts": [
+      {
+        "value": "classroom",
+        "label": "Trong lớp học"
+      },
+      {
+        "value": "indoor",
+        "label": "Trong phòng"
+      },
+      {
+        "value": "outdoor",
+        "label": "Ngoài trời"
+      },
+      {
+        "value": "campus",
+        "label": "Campus"
+      },
+      {
+        "value": "small-group",
+        "label": "Nhóm nhỏ"
+      }
+    ],
+    "purposes": [
+      {
+        "value": "meet",
+        "label": "Làm quen"
+      },
+      {
+        "value": "icebreak",
+        "label": "Phá băng"
+      },
+      {
+        "value": "laugh",
+        "label": "Tạo tiếng cười"
+      },
+      {
+        "value": "interact",
+        "label": "Tăng tương tác"
+      },
+      {
+        "value": "common",
+        "label": "Tìm điểm chung"
+      },
+      {
+        "value": "comfort",
+        "label": "Tạo sự thoải mái"
+      },
+      {
+        "value": "communicate",
+        "label": "Giao tiếp"
+      },
+      {
+        "value": "kickoff",
+        "label": "Khởi động trước khi họp nhóm"
+      }
+    ],
+    "durations": [
+      {
+        "value": "under-5",
+        "label": "Dưới 5 phút"
+      },
+      {
+        "value": "5-7",
+        "label": "5–7 phút"
+      },
+      {
+        "value": "8-10",
+        "label": "8–10 phút"
+      },
+      {
+        "value": "10-15",
+        "label": "10–15 phút"
+      },
+      {
+        "value": "over-15",
+        "label": "Trên 15 phút"
+      }
+    ]
+  }
+}

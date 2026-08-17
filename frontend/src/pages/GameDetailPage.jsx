@@ -5,7 +5,6 @@ import ReviewForm from "../components/ReviewForm.jsx";
 import SoftStatusBanner from "../components/SoftStatusBanner.jsx";
 import StarRating from "../components/StarRating.jsx";
 import {
-  getCachedDetail,
   getCachedReviews,
   getGameFallback,
   loadGameDetail,
@@ -14,12 +13,6 @@ import {
 } from "../cache/gameStore.js";
 import { formatDuration, formatPlayers, formatRating } from "../api.js";
 
-const SKELETON_MAX_MS = 3500;
-
-function hasFullDetail(game) {
-  return Boolean(game && game.howToPlay != null && game.rules != null);
-}
-
 export default function GameDetailPage() {
   const { id } = useParams();
   const initial = getGameFallback(id);
@@ -27,78 +20,52 @@ export default function GameDetailPage() {
 
   const [game, setGame] = useState(initial);
   const [reviews, setReviews] = useState(initialReviews || []);
-  const [detailLoading, setDetailLoading] = useState(!hasFullDetail(initial));
-  const [reviewsLoading, setReviewsLoading] = useState(initialReviews == null);
-  const [usingFallback, setUsingFallback] = useState(Boolean(initial) && !hasFullDetail(initial));
-  const [liveOk, setLiveOk] = useState(hasFullDetail(initial));
+  const [reviewsLoading, setReviewsLoading] = useState(true);
+  const [reviewsLive, setReviewsLive] = useState(initialReviews != null);
   const [error, setError] = useState("");
   const [loadToken, setLoadToken] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
     const fallback = getGameFallback(id);
-    const existingReviews = getCachedReviews(id);
-    const fullCached = hasFullDetail(getCachedDetail(id));
 
     setError("");
     setGame(fallback || null);
-    setReviews(existingReviews || []);
-    setDetailLoading(!fullCached);
-    setReviewsLoading(existingReviews == null);
-    setUsingFallback(Boolean(fallback) && !fullCached);
-    setLiveOk(fullCached);
+    setReviews(getCachedReviews(id) || []);
+    setReviewsLoading(true);
+    setReviewsLive(false);
 
-    const skeletonTimer = setTimeout(() => {
-      if (!cancelled) setDetailLoading(false);
-    }, SKELETON_MAX_MS);
-
-    const needDetail = !fullCached || loadToken > 0;
-    const needReviews = existingReviews == null || loadToken > 0;
-
-    if (needDetail) {
-      loadGameDetail(id, { force: loadToken > 0 })
-        .then((data) => {
-          if (cancelled) return;
+    // Content from static catalogue immediately; soft-refresh live fields when possible.
+    loadGameDetail(id, { force: loadToken > 0 })
+      .then((data) => {
+        if (!cancelled && data) {
           setGame(data);
-          setDetailLoading(false);
-          setUsingFallback(false);
-          setLiveOk(true);
           setError("");
-        })
-        .catch((err) => {
-          if (cancelled) return;
-          const still = getGameFallback(id);
-          if (still) {
-            setGame(still);
-            setUsingFallback(true);
-            setError("");
-          } else {
-            setError(err.message || "Không tải được chi tiết trò chơi.");
-          }
-          setDetailLoading(false);
-          setLiveOk(false);
-        });
-    }
+        }
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        if (!getGameFallback(id)) {
+          setError(err.message || "Không tải được chi tiết trò chơi.");
+        }
+      });
 
-    if (needReviews) {
-      loadGameReviews(id, { force: loadToken > 0 })
-        .then((data) => {
-          if (cancelled) return;
-          setReviews(data);
-          setReviewsLoading(false);
-        })
-        .catch(() => {
-          if (cancelled) return;
-          setReviewsLoading(false);
-          if (!getGameFallback(id)) {
-            setError((prev) => prev || "Không tải được review.");
-          }
-        });
-    }
+    // Reviews/ratings always from backend.
+    loadGameReviews(id, { force: true })
+      .then((data) => {
+        if (cancelled) return;
+        setReviews(data);
+        setReviewsLoading(false);
+        setReviewsLive(true);
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setReviewsLoading(false);
+        setReviewsLive(false);
+      });
 
     return () => {
       cancelled = true;
-      clearTimeout(skeletonTimer);
     };
   }, [id, loadToken]);
 
@@ -107,8 +74,7 @@ export default function GameDetailPage() {
       .then(({ reviews: nextReviews, detail }) => {
         setReviews(nextReviews);
         setGame(detail);
-        setUsingFallback(false);
-        setLiveOk(true);
+        setReviewsLive(true);
         setError("");
       })
       .catch((err) => setError(err.message));
@@ -116,7 +82,6 @@ export default function GameDetailPage() {
 
   const onRetry = () => setLoadToken((n) => n + 1);
   const showShell = Boolean(game);
-  const showSoftBanner = showShell && (usingFallback || (!liveOk && showShell));
 
   return (
     <div className="page">
@@ -126,7 +91,7 @@ export default function GameDetailPage() {
           ← Về danh sách
         </Link>
 
-        <SoftStatusBanner show={showSoftBanner} />
+        <SoftStatusBanner show={Boolean(showShell && !reviewsLive)} />
 
         {error && !showShell ? (
           <div className="error-panel" role="alert">
@@ -137,14 +102,12 @@ export default function GameDetailPage() {
           </div>
         ) : null}
 
-        {!error && !showShell && detailLoading ? <p>Đang tải chi tiết trò chơi…</p> : null}
-
-        {!error && !showShell && !detailLoading ? (
+        {!error && !showShell ? (
           <div className="error-panel" role="alert">
-            <p className="error">Không tìm thấy trò chơi hoặc máy chủ chưa phản hồi.</p>
-            <button type="button" className="retry-btn" onClick={onRetry}>
-              Thử lại
-            </button>
+            <p className="error">Không tìm thấy trò chơi trong catalogue.</p>
+            <Link to="/" className="retry-btn" style={{ display: "inline-block", textDecoration: "none" }}>
+              Về danh sách
+            </Link>
           </div>
         ) : null}
 
@@ -191,40 +154,17 @@ export default function GameDetailPage() {
 
             <section>
               <h2>Cách chơi</h2>
-              {detailLoading && game.howToPlay == null ? (
-                <div className="skeleton-block" aria-hidden="true">
-                  <div className="skeleton-line" />
-                  <div className="skeleton-line" />
-                  <div className="skeleton-line skeleton-short" />
-                </div>
-              ) : game.howToPlay != null ? (
-                <div className="prose">{game.howToPlay}</div>
-              ) : (
-                <p className="empty">Nội dung chi tiết sẽ hiện khi máy chủ sẵn sàng.</p>
-              )}
+              <div className="prose">{game.howToPlay}</div>
             </section>
 
             <section>
               <h2>Chuẩn bị</h2>
-              {detailLoading && game.preparation == null ? (
-                <div className="skeleton-line skeleton-short" aria-hidden="true" />
-              ) : (
-                <p>{game.preparation || (usingFallback ? "—" : "")}</p>
-              )}
+              <p>{game.preparation}</p>
             </section>
 
             <section>
               <h2>Quy định</h2>
-              {detailLoading && game.rules == null ? (
-                <div className="skeleton-block" aria-hidden="true">
-                  <div className="skeleton-line" />
-                  <div className="skeleton-line skeleton-short" />
-                </div>
-              ) : game.rules != null ? (
-                <div className="prose">{game.rules}</div>
-              ) : (
-                <p className="empty">Nội dung chi tiết sẽ hiện khi máy chủ sẵn sàng.</p>
-              )}
+              <div className="prose">{game.rules}</div>
             </section>
 
             <section>

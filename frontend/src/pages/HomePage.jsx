@@ -6,14 +6,10 @@ import Pagination from "../components/Pagination.jsx";
 import SoftStatusBanner from "../components/SoftStatusBanner.jsx";
 import { filterGames, paginateGames } from "../cache/filterGames.js";
 import {
-  DEFAULT_FILTER_CATALOG,
-  getMemoryCatalog,
-  loadFilterCatalog,
-  loadGameCatalog,
-  mergeFilterCatalog,
+  getCachedFilters,
+  getStaticCatalog,
   pageSize,
-  readPersistedFilters,
-  readPersistedGames,
+  softRefreshCatalogRatings,
   wakeBackendEarly,
 } from "../cache/gameStore.js";
 
@@ -24,30 +20,16 @@ const EMPTY_FILTERS = {
   duration: "",
 };
 
-const SKELETON_MAX_MS = 3500;
-const COLD_HINT_MS = 2500;
-
-function initialCatalog() {
-  return getMemoryCatalog() || readPersistedGames() || [];
-}
-
-function initialFilters() {
-  return mergeFilterCatalog(readPersistedFilters() || DEFAULT_FILTER_CATALOG);
-}
-
 export default function HomePage() {
   const [searchInput, setSearchInput] = useState("");
   const [search, setSearch] = useState("");
   const [selected, setSelected] = useState(EMPTY_FILTERS);
   const [page, setPage] = useState(0);
-  const [catalog, setCatalog] = useState(initialCatalog);
-  const [filters, setFilters] = useState(initialFilters);
-  const [error, setError] = useState("");
-  const [refreshing, setRefreshing] = useState(true);
-  const [fromCache, setFromCache] = useState(() => initialCatalog().length > 0);
-  const [showColdHint, setShowColdHint] = useState(false);
-  const [showSkeleton, setShowSkeleton] = useState(() => initialCatalog().length === 0);
-  const [loadToken, setLoadToken] = useState(0);
+  // Instant catalogue — bundled static data, never blocked on /api/games
+  const [catalog, setCatalog] = useState(() => getStaticCatalog());
+  const [filters] = useState(() => getCachedFilters());
+  const [ratingsLive, setRatingsLive] = useState(false);
+  const [softRefreshing, setSoftRefreshing] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -57,64 +39,25 @@ export default function HomePage() {
     return () => clearTimeout(timer);
   }, [searchInput]);
 
+  // Background only: wake + optional rating refresh. UI already has 20 games.
   useEffect(() => {
     let cancelled = false;
-    const hasCache = (getMemoryCatalog() || readPersistedGames() || []).length > 0;
-
-    setRefreshing(true);
-    setError("");
-    setFromCache(hasCache);
-    setShowColdHint(false);
-    setShowSkeleton(!hasCache);
-
-    const coldTimer = setTimeout(() => {
-      if (!cancelled) setShowColdHint(true);
-    }, COLD_HINT_MS);
-
-    const skeletonTimer = setTimeout(() => {
-      if (!cancelled) setShowSkeleton(false);
-    }, SKELETON_MAX_MS);
-
     wakeBackendEarly();
-
-    loadGameCatalog({ force: loadToken > 0 })
+    setSoftRefreshing(true);
+    softRefreshCatalogRatings()
       .then((games) => {
         if (cancelled) return;
         setCatalog(games);
-        setFromCache(false);
-        setRefreshing(false);
-        setShowColdHint(false);
-        setShowSkeleton(false);
-        setError("");
-      })
-      .catch((err) => {
-        if (cancelled) return;
-        const cached = getMemoryCatalog() || readPersistedGames() || [];
-        if (cached.length) {
-          setCatalog(cached);
-          setFromCache(true);
-          setError("");
-        } else {
-          setError(err.message || "Không tải được danh sách trò chơi.");
-        }
-        setRefreshing(false);
-        setShowSkeleton(false);
-      });
-
-    loadFilterCatalog({ force: loadToken > 0 })
-      .then((data) => {
-        if (!cancelled) setFilters(mergeFilterCatalog(data));
+        setRatingsLive(true);
+        setSoftRefreshing(false);
       })
       .catch(() => {
-        /* keep default / persisted filters */
+        if (!cancelled) setSoftRefreshing(false);
       });
-
     return () => {
       cancelled = true;
-      clearTimeout(coldTimer);
-      clearTimeout(skeletonTimer);
     };
-  }, [loadToken]);
+  }, []);
 
   const filtered = useMemo(
     () => filterGames(catalog || [], { search, selected, filterCatalog: filters }),
@@ -137,11 +80,7 @@ export default function HomePage() {
     setPage(0);
   };
 
-  const onRetry = () => setLoadToken((n) => n + 1);
-
-  const hasGames = result.content.length > 0;
-  const emptyAfterLoad = !refreshing && !showSkeleton && !hasGames && !error;
-  const showSoftBanner = (fromCache && hasGames) || (refreshing && hasGames);
+  const showSoftBanner = softRefreshing && !ratingsLive;
 
   return (
     <div className="page">
@@ -161,11 +100,7 @@ export default function HomePage() {
         <Filters filters={filters} selected={selected} onChange={onFilterChange} />
 
         <div className="result-bar">
-          <p>
-            {refreshing && !hasGames
-              ? "Đang kết nối máy chủ…"
-              : `Tìm thấy ${result.totalElements} trò chơi`}
-          </p>
+          <p>Tìm thấy {result.totalElements} trò chơi</p>
           <button
             type="button"
             className="text-btn"
@@ -182,40 +117,8 @@ export default function HomePage() {
 
         <SoftStatusBanner show={showSoftBanner} />
 
-        {showColdHint && refreshing && !hasGames ? (
-          <p className="cold-start-hint" role="status">
-            Máy chủ đang khởi động. Bạn vẫn dùng được tìm kiếm và bộ lọc khi đã có dữ liệu lưu.
-          </p>
-        ) : null}
-
-        {fromCache && !refreshing ? (
-          <p className="cache-hint" role="status">
-            <button type="button" className="text-btn inline" onClick={onRetry}>
-              Tải lại từ máy chủ
-            </button>
-          </p>
-        ) : null}
-
-        {error ? (
-          <div className="error-panel" role="alert">
-            <p className="error">{error}</p>
-            <button type="button" className="retry-btn" onClick={onRetry}>
-              Thử lại
-            </button>
-          </div>
-        ) : null}
-
-        <section className="grid" aria-busy={refreshing && !hasGames}>
-          {showSkeleton && !hasGames
-            ? Array.from({ length: 4 }, (_, i) => (
-                <div key={`skeleton-${i}`} className="card skeleton-card" aria-hidden="true">
-                  <div className="skeleton-line skeleton-title" />
-                  <div className="skeleton-line" />
-                  <div className="skeleton-line skeleton-short" />
-                </div>
-              ))
-            : null}
-          {emptyAfterLoad ? (
+        <section className="grid">
+          {result.content.length === 0 ? (
             <p className="empty">Không có trò chơi khớp. Thử nới bộ lọc hoặc xóa từ khóa.</p>
           ) : null}
           {result.content.map((game) => (
