@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+  <rect width="640" height="360" fill="#2F6F6A"/>
+  <circle cx="220" cy="155" r="72" fill="#FFFDF8"/>
+  <circle cx="420" cy="155" r="72" fill="#E07A5F"/>
+  <path d="M280 140 Q320 90 360 140" fill="none" stroke="#FFFDF8" stroke-width="14" stroke-linecap="round"/>
+  <text x="320" y="310" text-anchor="middle" fill="#FFFDF8" font-size="28" font-family="Segoe UI, sans-serif" font-weight="700">High-five</text>
+</svg>

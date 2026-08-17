@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+  <rect width="640" height="360" fill="#2F6F6A"/>
+  <rect x="80" y="70" width="480" height="160" rx="24" fill="#FFFDF8"/>
+  <circle cx="320" cy="150" r="42" fill="#1B4D4A"/>
+  <rect x="200" y="210" width="240" height="14" rx="7" fill="#E07A5F"/>
+  <text x="320" y="310" text-anchor="middle" fill="#FFFDF8" font-size="28" font-family="Segoe UI, sans-serif" font-weight="700">Game</text>
+</svg>

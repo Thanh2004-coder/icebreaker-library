@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+  <rect width="640" height="360" fill="#2F6F6A"/>
+  <ellipse cx="320" cy="210" rx="100" ry="55" fill="#1B4D4A"/>
+  <circle cx="320" cy="135" r="62" fill="#E07A5F"/>
+  <circle cx="300" cy="125" r="8" fill="#FFFDF8"/>
+  <circle cx="340" cy="125" r="8" fill="#FFFDF8"/>
+  <ellipse cx="250" cy="120" rx="20" ry="32" fill="#C65B42"/>
+  <ellipse cx="390" cy="120" rx="20" ry="32" fill="#C65B42"/>
+  <text x="320" y="310" text-anchor="middle" fill="#FFFDF8" font-size="28" font-family="Segoe UI, sans-serif" font-weight="700">Con vật đại diện</text>
+</svg>

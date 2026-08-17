@@ -13,6 +13,13 @@ import {
 } from "../api.js";
 import { STATIC_FILTERS, STATIC_GAMES, getStaticGameById } from "../data/staticCatalog.js";
 
+/** Keep catalogue `image` when live API payloads omit it. */
+function withCatalogImage(live, key) {
+  if (!live) return live;
+  const fromCatalog = getStaticGameById(key)?.image || getCachedSummary(key)?.image;
+  return live.image ? live : { ...live, image: fromCatalog };
+}
+
 const PAGE_SIZE = 10;
 const CATALOG_SIZE = 50;
 const LS_GAMES = "warmup.catalog.v1";
@@ -278,26 +285,28 @@ export function loadGameDetail(id, { force = false } = {}) {
         return fetchGame(key, { timeoutMs: GAMES_TIMEOUT_MS });
       })()
         .then((data) => {
-          detailById.set(key, data);
+          const merged = withCatalogImage(data, key);
+          detailById.set(key, merged);
           rememberSummary({
-            id: data.id,
-            name: data.name,
-            description: data.description,
-            durationMin: data.durationMin,
-            durationMax: data.durationMax,
-            minPlayers: data.minPlayers,
-            maxPlayers: data.maxPlayers,
-            context: data.context,
-            purpose: data.purpose,
-            preparation: data.preparation,
-            preparationRequired: data.preparationRequired,
-            preparationTime: data.preparationTime,
-            averageRating: data.averageRating,
-            reviewCount: data.reviewCount,
-            contexts: data.contexts,
-            purposes: data.purposes,
+            id: merged.id,
+            name: merged.name,
+            description: merged.description,
+            image: merged.image,
+            durationMin: merged.durationMin,
+            durationMax: merged.durationMax,
+            minPlayers: merged.minPlayers,
+            maxPlayers: merged.maxPlayers,
+            context: merged.context,
+            purpose: merged.purpose,
+            preparation: merged.preparation,
+            preparationRequired: merged.preparationRequired,
+            preparationTime: merged.preparationTime,
+            averageRating: merged.averageRating,
+            reviewCount: merged.reviewCount,
+            contexts: merged.contexts,
+            purposes: merged.purposes,
           });
-          return data;
+          return merged;
         })
         .catch(() => staticDetail)
         .finally(() => {
@@ -317,26 +326,28 @@ export function loadGameDetail(id, { force = false } = {}) {
     return fetchGame(key, { timeoutMs: GAMES_TIMEOUT_MS });
   })()
     .then((data) => {
-      detailById.set(key, data);
+      const merged = withCatalogImage(data, key);
+      detailById.set(key, merged);
       rememberSummary({
-        id: data.id,
-        name: data.name,
-        description: data.description,
-        durationMin: data.durationMin,
-        durationMax: data.durationMax,
-        minPlayers: data.minPlayers,
-        maxPlayers: data.maxPlayers,
-        context: data.context,
-        purpose: data.purpose,
-        preparation: data.preparation,
-        preparationRequired: data.preparationRequired,
-        preparationTime: data.preparationTime,
-        averageRating: data.averageRating,
-        reviewCount: data.reviewCount,
-        contexts: data.contexts,
-        purposes: data.purposes,
+        id: merged.id,
+        name: merged.name,
+        description: merged.description,
+        image: merged.image,
+        durationMin: merged.durationMin,
+        durationMax: merged.durationMax,
+        minPlayers: merged.minPlayers,
+        maxPlayers: merged.maxPlayers,
+        context: merged.context,
+        purpose: merged.purpose,
+        preparation: merged.preparation,
+        preparationRequired: merged.preparationRequired,
+        preparationTime: merged.preparationTime,
+        averageRating: merged.averageRating,
+        reviewCount: merged.reviewCount,
+        contexts: merged.contexts,
+        purposes: merged.purposes,
       });
-      return data;
+      return merged;
     })
     .catch((err) => {
       const fallback = getGameFallback(key);

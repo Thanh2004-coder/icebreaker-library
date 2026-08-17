@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+  <rect width="640" height="360" fill="#1B4D4A"/>
+  <circle cx="200" cy="140" r="48" fill="#FFFDF8"/>
+  <circle cx="320" cy="140" r="48" fill="#E07A5F"/>
+  <circle cx="440" cy="140" r="48" fill="#7A9E7E"/>
+  <circle cx="260" cy="210" r="36" fill="#2F6F6A"/>
+  <circle cx="380" cy="210" r="36" fill="#C65B42"/>
+  <text x="320" y="310" text-anchor="middle" fill="#FFFDF8" font-size="26" font-family="Segoe UI, sans-serif" font-weight="700">Cùng vibe</text>
+</svg>

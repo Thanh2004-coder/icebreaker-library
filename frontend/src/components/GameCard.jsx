@@ -1,35 +1,55 @@
 import { Link } from "react-router-dom";
 import { formatDuration, formatPlayers, formatRating } from "../api.js";
+import { FALLBACK_GAME_IMAGE, getGameImage } from "../data/staticCatalog.js";
 import StarRating from "./StarRating.jsx";
+
+function onGameImageError(event) {
+  const img = event.currentTarget;
+  if (img.dataset.fallback === "1") return;
+  img.dataset.fallback = "1";
+  img.src = FALLBACK_GAME_IMAGE;
+}
 
 export default function GameCard({ game }) {
   const purposes = game.purposes?.length ? game.purposes : (game.purpose ? game.purpose.split(", ") : []);
   const context = game.contexts?.[0] || game.context;
   return (
     <article className="card">
-      <div className="card-top">
-        <h2>{game.name}</h2>
+      <div className="card-image-wrap">
+        <img
+          className="card-image"
+          src={getGameImage(game)}
+          alt={game.name}
+          width="640"
+          height="360"
+          onError={onGameImageError}
+        />
       </div>
-      <p className="card-desc">{game.description}</p>
-      <ul className="meta">
-        <li>👥 {formatPlayers(game.minPlayers, game.maxPlayers)}</li>
-        <li>📍 {context}</li>
-        <li>⏱ {formatDuration(game.durationMin, game.durationMax)}</li>
-      </ul>
-      <div className="tag-row">
-        {purposes.map((item) => (
-          <span key={item} className="tag purpose">
-            🎯 {item}
-          </span>
-        ))}
+      <div className="card-body">
+        <div className="card-top">
+          <h2>{game.name}</h2>
+        </div>
+        <p className="card-desc">{game.description}</p>
+        <ul className="meta">
+          <li>👥 {formatPlayers(game.minPlayers, game.maxPlayers)}</li>
+          <li>📍 {context}</li>
+          <li>⏱ {formatDuration(game.durationMin, game.durationMax)}</li>
+        </ul>
+        <div className="tag-row">
+          {purposes.map((item) => (
+            <span key={item} className="tag purpose">
+              🎯 {item}
+            </span>
+          ))}
+        </div>
+        <div className="rating-row">
+          {game.reviewCount ? <StarRating value={Math.round(game.averageRating || 0)} readOnly /> : null}
+          <span>{formatRating(game.averageRating, game.reviewCount)}</span>
+        </div>
+        <Link to={`/games/${game.id}`} className="detail-link">
+          Xem chi tiết
+        </Link>
       </div>
-      <div className="rating-row">
-        {game.reviewCount ? <StarRating value={Math.round(game.averageRating || 0)} readOnly /> : null}
-        <span>{formatRating(game.averageRating, game.reviewCount)}</span>
-      </div>
-      <Link to={`/games/${game.id}`} className="detail-link">
-        Xem chi tiết
-      </Link>
     </article>
   );
 }

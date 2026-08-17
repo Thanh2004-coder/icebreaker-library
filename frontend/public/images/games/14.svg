@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+  <rect width="640" height="360" fill="#1B4D4A"/>
+  <rect x="150" y="55" width="220" height="170" rx="16" fill="#FFFDF8"/>
+  <rect x="170" y="75" width="180" height="120" rx="8" fill="#7A9E7E"/>
+  <circle cx="430" cy="160" r="70" fill="#E07A5F"/>
+  <text x="430" y="175" text-anchor="middle" fill="#FFFDF8" font-size="36" font-weight="800" font-family="Segoe UI, sans-serif">30s</text>
+  <text x="320" y="310" text-anchor="middle" fill="#FFFDF8" font-size="26" font-family="Segoe UI, sans-serif" font-weight="700">Show and Tell</text>
+</svg>

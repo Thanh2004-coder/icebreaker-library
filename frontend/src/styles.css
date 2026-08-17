@@ -312,14 +312,38 @@ legend {
 }
 
 .card {
-  display: block;
+  display: flex;
+  flex-direction: column;
   background: var(--paper);
   border: 1px solid var(--line);
   border-radius: 20px;
-  padding: 20px;
+  padding: 0;
+  overflow: hidden;
   box-shadow: var(--shadow);
   transition: transform 0.15s ease, border-color 0.15s ease;
   min-height: 100%;
+}
+
+.card-image-wrap {
+  flex: none;
+  width: 100%;
+  height: 168px;
+  overflow: hidden;
+  background: #d7e6e3;
+}
+
+.card-image {
+  display: block;
+  width: 100%;
+  height: 168px;
+  object-fit: cover;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 16px 20px 20px;
 }
 
 .card:hover {
@@ -610,6 +634,11 @@ legend {
 
   .pagination {
     flex-wrap: wrap;
+  }
+
+  .card-image-wrap,
+  .card-image {
+    height: 132px;
   }
 }
 

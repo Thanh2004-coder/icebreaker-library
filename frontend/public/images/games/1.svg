@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+  <rect width="640" height="360" fill="#1B4D4A"/>
+  <circle cx="170" cy="155" r="58" fill="#FFFDF8"/>
+  <circle cx="470" cy="155" r="58" fill="#E07A5F"/>
+  <path d="M228 140 C300 90 340 220 412 155" fill="none" stroke="#FFFDF8" stroke-width="10" stroke-dasharray="18 12" stroke-linecap="round"/>
+  <text x="320" y="310" text-anchor="middle" fill="#FFFDF8" font-size="28" font-family="Segoe UI, sans-serif" font-weight="700">Thì thầm tin nhắn</text>
+</svg>

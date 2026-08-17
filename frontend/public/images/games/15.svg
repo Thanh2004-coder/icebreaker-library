@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+  <rect width="640" height="360" fill="#2F6F6A"/>
+  <rect x="70" y="80" width="220" height="150" rx="20" fill="#1B4D4A"/>
+  <rect x="350" y="80" width="220" height="150" rx="20" fill="#E07A5F"/>
+  <text x="180" y="170" text-anchor="middle" fill="#FFFDF8" font-size="42" font-weight="800" font-family="Segoe UI, sans-serif">A</text>
+  <text x="460" y="170" text-anchor="middle" fill="#FFFDF8" font-size="42" font-weight="800" font-family="Segoe UI, sans-serif">B</text>
+  <text x="320" y="310" text-anchor="middle" fill="#FFFDF8" font-size="26" font-family="Segoe UI, sans-serif" font-weight="700">Would You Rather</text>
+</svg>
